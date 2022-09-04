@@ -14,12 +14,14 @@ public class TextFunctions : MonoBehaviour
         //DisplayText("test.txt");
     }
 
-    public void DisplayText(string fileName)
+    public string LoadText(string fileName)
     {
-        string file = filePath + fileName; 
+        string text;
+        string file = filePath + fileName;
         StreamReader reader = new StreamReader(file);
-        levelController.GetTextObject().text = reader.ReadToEnd();
+        text = reader.ReadToEnd();
         reader.Close();
+        return text;
     }
 
     public int CheckFilesNumber(string folderName)

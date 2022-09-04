@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Introduction : MonoBehaviour
 {
-    public LevelController levelController;
+    private LevelController levelController;
 
     private string filePreffix = "Introduction/";
     private string fileName = "intro_";
     private int fileNumber = 0;
     private string fileSuffix = ".txt";
+
+    [SerializeField] private TextMeshProUGUI textObject;
 
     private int filesAmount;
 
@@ -27,7 +30,7 @@ public class Introduction : MonoBehaviour
             if(fileNumber != filesAmount)
             {
                 string filePath = filePreffix + fileName + fileNumber + fileSuffix;
-                levelController.GetTextFunctions().DisplayText(filePath);
+                textObject.text = levelController.GetTextFunctions().LoadText(filePath);
                 fileNumber++;
             }
             else

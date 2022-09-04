@@ -4,9 +4,7 @@ using UnityEngine;
 public class LevelController : MonoBehaviour
 {
     public static LevelController Instance { get; private set; }
-
-    [SerializeField] private TextMeshProUGUI textObject;
-    public TextFunctions textFunctions;
+    private TextFunctions textFunctions;
 
     private void Awake()
     {
@@ -21,11 +19,6 @@ public class LevelController : MonoBehaviour
         }
 
         textFunctions = GetComponent<TextFunctions>();
-    }
-
-    public TextMeshProUGUI GetTextObject()
-    {
-        return textObject;
     }
 
     public TextFunctions GetTextFunctions()
