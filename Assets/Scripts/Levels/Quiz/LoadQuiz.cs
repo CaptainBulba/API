@@ -27,7 +27,7 @@ public class LoadQuiz : MonoBehaviour
         LoadSection();
     }
 
-    private void LoadSection()
+    public void LoadSection()
     {
         string questionFilePath = filePreffix + questionFileName + fileNumber + fileSuffix;
         string answerFilePath = filePreffix + answerFileName + fileNumber + fileSuffix;

@@ -18,9 +18,11 @@ public class TextFunctions : MonoBehaviour
     {
         string text;
         string file = filePath + fileName;
+
         StreamReader reader = new StreamReader(file);
         text = reader.ReadToEnd();
         reader.Close();
+        
         return text;
     }
 
