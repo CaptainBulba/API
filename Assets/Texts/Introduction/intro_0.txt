@@ -1,1 +1,8 @@
-hello
+API stands for Application Programming Interface.
+
+API is like an open language, the rules of which are shared by a certain service.
+You can teach your application the rules of this language, so it can communicate with the service and access all the functions and data that the service is ready to share.
+
+Speaking a little more formally, API is an interface that allows your application to interact with an external service using a simple set of commands.
+
+You do not need to know the internal logic of the service, just send a simple command and the service will return the necessary data.

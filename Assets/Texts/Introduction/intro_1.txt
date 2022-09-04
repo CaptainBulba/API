@@ -1,1 +1,9 @@
-hello1
+Why are APIs important?
+
+If there were no APIs, the functionality of your applications would be limited, and the development time would increase significantly since any function that is not implemented as a module of one of the programming languages would have to be developed independently.
+
+APIs tie disparate applications together, allowing them to complement each other.
+
+The hotel selection service uses an external API for recognizing and cataloging photos of rooms, the same service itself through the API provides an opportunity to select and book hotel rooms, thus enriching the functionality of many travel applications.
+
+If there were no API, each application would be limited to a narrow list of its own functions without the possibility of expanding it to something that others have already invented and used for a long time.

@@ -1,1 +1,9 @@
-hello2
+Request Methods
+Having dealt with the basics of the API, let's go a little further, namely, let's deal with Request Methods, using which we can communicate with the API.
+
+Without getting into too much detail, Request Methods characterize what action we are going to take by referring to the API. In total, there are four main types of actions:
+
+GET: requests data from a server. This is the most common type of request. Using it we can get the data we are interested in from those that the API is ready to share.
+POST: adds new data to the server. Using this type of request, you can, for example, add a new contact to CRM.
+PUT: changes existing information. For example, using this type of request, it would be possible to change the color or value of an existing product.
+DELETE: deletes existing information
