@@ -1,5 +1,5 @@
-Request Methods
-Having dealt with the basics of the API, let's go a little further, namely, let's deal with Request Methods, using which we can communicate with the API.
+<size=150%>Request Methods
+<size=80%>Having dealt with the basics of the API, let's go a little further, namely, let's deal with Request Methods, using which we can communicate with the API.
 
 Without getting into too much detail, Request Methods characterize what action we are going to take by referring to the API. In total, there are four main types of actions:
 

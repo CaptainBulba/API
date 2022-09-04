@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
     public static LevelController Instance { get; private set; }
 
-    [SerializeField] private Text textObject;
+    [SerializeField] private TextMeshProUGUI textObject;
     public TextFunctions textFunctions;
 
     private void Awake()
@@ -25,7 +23,7 @@ public class LevelController : MonoBehaviour
         textFunctions = GetComponent<TextFunctions>();
     }
 
-    public Text GetTextObject()
+    public TextMeshProUGUI GetTextObject()
     {
         return textObject;
     }
