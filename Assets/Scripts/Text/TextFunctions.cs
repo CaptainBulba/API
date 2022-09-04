@@ -24,7 +24,6 @@ public class TextFunctions : MonoBehaviour
 
     public int CheckFilesNumber(string folderName)
     {
-        Debug.Log(filePath + folderName);
         int filesNumber = 0;
         var txtFiles = Directory.EnumerateFiles(filePath + folderName, "*.txt");
         
