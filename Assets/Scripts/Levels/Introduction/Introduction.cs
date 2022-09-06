@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Introduction : MonoBehaviour
+public class Introduction : FileSettings
 {
     private LevelController levelController;
-
-    private string filePreffix = "Introduction/";
-    private string fileName = "intro_";
-    private int fileNumber = 0;
-    private string fileSuffix = ".txt";
 
     [SerializeField] private TextMeshProUGUI textObject;
 
@@ -19,19 +14,18 @@ public class Introduction : MonoBehaviour
     private void Start()
     {
         levelController = LevelController.Instance;
-        filesAmount = levelController.GetTextFunctions().CheckFilesNumber(filePreffix);
-        Debug.Log(filesAmount);
+        SetFileSettings("Introduction/", "intro_", ".txt");
+        filesAmount = levelController.GetTextFunctions().CheckFilesNumber(GetFilePreffix());
     }
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            if(fileNumber != filesAmount)
+            if(GetFileNumber() != filesAmount)
             {
-                string filePath = filePreffix + fileName + fileNumber + fileSuffix;
-                textObject.text = levelController.GetTextFunctions().LoadText(filePath);
-                fileNumber++;
+                textObject.text = levelController.GetTextFunctions().LoadText(GetFileSettings());
+                AddFileNumber();
             }
             else
             {
