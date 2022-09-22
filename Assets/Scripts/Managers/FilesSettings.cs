@@ -30,7 +30,7 @@ public class FileSettings : MonoBehaviour
     {
         return fileNumber;
     }
-
+      
     public void AddFileNumber()
     {
         fileNumber++;
