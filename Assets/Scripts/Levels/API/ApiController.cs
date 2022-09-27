@@ -19,6 +19,7 @@ public class ApiController : MonoBehaviour
     private void PlayerGet()
     {
         //Debug.Log(ObjectToJson(player));
+
         pipemanController.DisplayText(ObjectToJson(player));
     }
      
@@ -43,7 +44,7 @@ public class ApiController : MonoBehaviour
 
     private string ObjectToJson(AccessibleObjects accesibleObject)
     {
-        return JsonUtility.ToJson(accesibleObject);
+        return JsonUtility.ToJson(accesibleObject, true);
     }
 
     private bool CheckName(string name)
