@@ -5,6 +5,7 @@ public class ApiController : MonoBehaviour
     private LevelController levelController;
 
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private Pipeman pipemanController;
 
     private AccessibleObjects player;
 
@@ -17,7 +18,8 @@ public class ApiController : MonoBehaviour
 
     private void PlayerGet()
     {
-        Debug.Log(ObjectToJson(player));
+        //Debug.Log(ObjectToJson(player));
+        pipemanController.DisplayText(ObjectToJson(player));
     }
      
     private void PlayerPut(string name, string xCord, string yCord)
@@ -35,7 +37,7 @@ public class ApiController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Error");
+            Debug.Log("Error"); 
         }
     }
 
