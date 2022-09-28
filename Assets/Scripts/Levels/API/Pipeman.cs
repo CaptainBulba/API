@@ -16,7 +16,7 @@ public class Pipeman : MonoBehaviour
        // DisplayText(text);
     }
 
-    public void DisplayText(string text)
+    public void ChangeResponse(string text)
     {
         responseText.text = text;
         scrollRect.verticalNormalizedPosition = 1f;
@@ -35,8 +35,13 @@ public class Pipeman : MonoBehaviour
             case EndpointConstants.getPlayer:
                 Debug.Log(EndpointConstants.getPlayer);
                 break;
+
             case EndpointConstants.putPlayer:
                 Debug.Log(EndpointConstants.putPlayer);
+                break;
+
+            default:
+                ChangeResponse("Endpoint does not exist");
                 break;
         } 
     }

@@ -26,7 +26,7 @@ public class ApiController : MonoBehaviour
     {
         Debug.Log(ObjectToJson(player));
 
-        pipemanController.DisplayText(ObjectToJson(player));
+        pipemanController.ChangeResponse(ObjectToJson(player));
     }
      
     private void PlayerPut(string name, string xCord, string yCord)
