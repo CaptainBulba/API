@@ -1,3 +1,5 @@
+using System;
+using TMPro;
 using UnityEngine;
 
 public class ApiController : MonoBehaviour
@@ -9,11 +11,15 @@ public class ApiController : MonoBehaviour
 
     private AccessibleObjects player;
 
+    [SerializeField] TMP_InputField inputField;
+
     private void Start()
     {
         levelController = LevelController.Instance;
         PlayerPut("Bob", "0", "0");
         PlayerGet();
+        inputField.text = ObjectToJson(player);
+        IsJson(inputField.text);
     }
 
     private void PlayerGet()
@@ -34,7 +40,7 @@ public class ApiController : MonoBehaviour
             player = new AccessibleObjects(name, int.Parse(xCord), int.Parse(yCord));
             Instantiate(playerPrefab, new Vector2(x, y), transform.rotation);
 
-            Debug.Log(ObjectToJson(player));
+           // Debug.Log(ObjectToJson(player));
         }
         else
         {
@@ -63,5 +69,23 @@ public class ApiController : MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    public bool IsJson(string json)
+    {
+        if (json == null)
+            return false;
+
+        try
+        {
+            AccessibleObjects p = JsonUtility.FromJson<AccessibleObjects>(json);
+            Debug.Log(p.name);
+            return true;
+        }
+        catch (ArgumentException)
+        {
+            Debug.Log("Nope");
+            return false;
+        }
     }
 }
