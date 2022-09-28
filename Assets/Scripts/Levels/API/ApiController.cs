@@ -24,7 +24,7 @@ public class ApiController : MonoBehaviour
 
     private void PlayerGet()
     {
-        //Debug.Log(ObjectToJson(player));
+        Debug.Log(ObjectToJson(player));
 
         pipemanController.DisplayText(ObjectToJson(player));
     }
@@ -78,8 +78,8 @@ public class ApiController : MonoBehaviour
 
         try
         {
-            AccessibleObjects p = JsonUtility.FromJson<AccessibleObjects>(json);
-            Debug.Log(p.name);
+            JsonUtility.FromJson<AccessibleObjects>(json);
+            Debug.Log(true);
             return true;
         }
         catch (ArgumentException)
