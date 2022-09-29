@@ -17,9 +17,13 @@ public class Pipeman : MonoBehaviour
 
     private GameObject[] tabs;
 
+    [SerializeField] private ApiController apiController;
+    private PlayerEndpoints playerEndpoints;
+
     private void Start()
     {
         tabs = new GameObject[] { paramTab, authTab, bodyTab };
+        playerEndpoints = apiController.GetPlayerEndpoints();
     }
 
     public void ChangeResponse(string text)
@@ -39,11 +43,11 @@ public class Pipeman : MonoBehaviour
         switch (fullEndpoint)
         {
             case EndpointConstants.getPlayer:
-                Debug.Log(EndpointConstants.getPlayer);
+                playerEndpoints.PlayerGet();
                 break;
 
             case EndpointConstants.putPlayer:
-                Debug.Log(EndpointConstants.putPlayer);
+                playerEndpoints.PlayerPut(body);
                 break;
 
             default:
