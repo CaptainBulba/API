@@ -1,4 +1,6 @@
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerEndpoints : MonoBehaviour
@@ -9,12 +11,14 @@ public class PlayerEndpoints : MonoBehaviour
 
     private Pipeman pipemanController;
 
+    private List<string> acceptedVariables = new List<string> { "name", "xCord" };
+
     private void Start()
     {
         pipemanController = GetComponent<ApiController>().GetPipeman();
 
         string json = "{\"name\": \"Bob\", \"xCord\": \"1\"}";
-
+        VariablesValidation(json);
         //PlayerPut(json);
     }
 
@@ -87,7 +91,7 @@ public class PlayerEndpoints : MonoBehaviour
         if (player == null)
             return false;
         else
-            return true; 
+            return true;
     }
 
     public bool IsJson(string json)
@@ -100,9 +104,22 @@ public class PlayerEndpoints : MonoBehaviour
             JsonUtility.FromJson<PlayerConstructor>(json);
             return true;
         }
-        catch (ArgumentException)
+        catch (System.Exception error)
         {
+            Debug.Log(error);
             return false;
         }
+    }
+
+    private bool VariablesValidation(string json)
+    {
+        Dictionary<string, string> jsonData = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+        foreach (KeyValuePair<string, string> variable in jsonData)
+        {
+            if (!acceptedVariables.Contains(variable.Key))
+                return false;          
+        }
+        return true;
     }
 }
