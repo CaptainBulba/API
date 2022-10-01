@@ -7,10 +7,9 @@ using UnityEngine;
 public class PlayerEndpoints : MonoBehaviour
 {
     private PlayerConstructor player;
+    private Pipeman pipemanController;
 
     [SerializeField] private GameObject playerPrefab;
-
-    private Pipeman pipemanController;
 
     private List<string> acceptedVariables = new List<string> { "name", "xCord" };
 
@@ -59,9 +58,9 @@ public class PlayerEndpoints : MonoBehaviour
         }
     } 
 
-    private string ObjectToJson(PlayerConstructor accesibleObject)
+    private string ObjectToJson(PlayerConstructor json)
     {
-        return JsonUtility.ToJson(accesibleObject, true);
+        return JsonConvert.SerializeObject(json, Formatting.Indented);
     }
 
     private bool CheckName(string name)
