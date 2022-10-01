@@ -12,6 +12,7 @@ public class PlayerEndpoints : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
 
     private List<string> acceptedVariables = new List<string> { "name", "xCord" };
+    private Dictionary<string, string> jsonData;
 
     private void Start()
     {
@@ -34,7 +35,7 @@ public class PlayerEndpoints : MonoBehaviour
     {
         if(IsValidJson(json) || IsPlayerExists())
         {
-            PlayerConstructor jsonData = JsonUtility.FromJson<PlayerConstructor>(json);
+            PlayerConstructor jsonData = JsonConvert.DeserializeObject<PlayerConstructor>(json);
 
             string name = jsonData.name;
             string x = jsonData.xCord;
@@ -121,7 +122,7 @@ public class PlayerEndpoints : MonoBehaviour
         foreach (KeyValuePair<string, string> variable in jsonData)
         {
             if (!acceptedVariables.Contains(variable.Key))
-                return false;          
+                return false;
         }
         return true;
     }
