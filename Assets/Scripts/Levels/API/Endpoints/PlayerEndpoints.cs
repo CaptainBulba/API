@@ -11,14 +11,18 @@ public class PlayerEndpoints : MonoBehaviour
 
     [SerializeField] private GameObject playerPrefab;
 
-    private List<string> acceptedVariables = new List<string> { "name", "xCord" };
+    private List<string> acceptedVariables = new List<string> { PlayerVariables.name.ToString(), PlayerVariables.xCords.ToString() };
     private Dictionary<string, string> jsonData;
 
     private void Start()
     {
         pipemanController = GetComponent<ApiController>().GetPipeman();
 
-        string json = "{\"name\": \"Bob\", \"xCord\": \"1\"}";
+        string json = "{\"name\": \"Bob\", \"xCord\": \"1\", \"yCord\": \"1\"}";
+        PlayerPut(json);
+        json = "{\"name\": \"Test\"}";
+        PlayerPost(json);
+        PlayerGet();
     }
 
     public void PlayerGet()
@@ -57,7 +61,42 @@ public class PlayerEndpoints : MonoBehaviour
         {
             Debug.Log("Error");
         }
-    } 
+    }
+
+    public void PlayerPost(string json)
+    {
+        if (IsValidJson(json) && IsPlayerExists() && VariablesValidation(json))
+        {
+            string name = null;
+            string x = null;
+            string y = null;
+
+            Dictionary<string, string> jsonData = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+            foreach (KeyValuePair<string, string> variable in jsonData)
+            {
+                if (variable.Key == PlayerVariables.name.ToString())
+                    name = variable.Value;
+
+                if (variable.Key == PlayerVariables.xCords.ToString())
+                    x = variable.Value;
+            }
+
+            if (CheckName(name) || CheckCord(x) || CheckCord(y))
+                JsonConvert.PopulateObject(json, player);
+
+            if(x != null || y != null)
+            {
+                if (x == null)
+                    x = player.xCord;
+
+                if (y == null)
+                    y = player.yCord;
+
+                // update player position
+            }
+        }
+    }
 
     private string ObjectToJson(PlayerConstructor json)
     {

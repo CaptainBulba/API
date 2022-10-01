@@ -6,7 +6,7 @@ public class PlayerConstructor
     public bool success = true;
     public int id;
     private static int idCounter = 0;
-    public string name;
+    public string name { get; set; }
     public string xCord;
     public string yCord;
     public bool activeFlag;
