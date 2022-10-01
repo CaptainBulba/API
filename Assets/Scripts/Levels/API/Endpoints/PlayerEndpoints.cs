@@ -37,7 +37,7 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void PlayerPut(string json)
     {
-        if(IsValidJson(json) || IsPlayerExists())
+        if(IsValidJson(json) && IsPlayerExists())
         {
             PlayerConstructor jsonData = JsonConvert.DeserializeObject<PlayerConstructor>(json);
 
