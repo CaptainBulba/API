@@ -40,14 +40,10 @@ public class PlayerEndpoints : MonoBehaviour
             string x = jsonData.coordinateX;
             string y = jsonData.coordinateY;
 
-            Debug.Log(x + " " + y);
-
             if (CheckName(name) && CheckCord(x) && CheckCord(y))
             {
                 player = new PlayerConstructor(name, x, y);
                 Instantiate(playerPrefab, new Vector2((float)int.Parse(x), (float)int.Parse(y)), transform.rotation);
-
-                Debug.Log(ObjectToJson(player));
             }
         }
     }
@@ -64,7 +60,6 @@ public class PlayerEndpoints : MonoBehaviour
 
             foreach (KeyValuePair<string, string> variable in jsonData)
             {
-                Debug.Log((variable.Key.ToLower() == GetPlayerVariable(PlayerVariables.Name)));
                 if (variable.Key.ToLower() == GetPlayerVariable(PlayerVariables.Name))
                 {
                     if (!CheckName(variable.Key))
