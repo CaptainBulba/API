@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -93,5 +93,17 @@ public class Pipeman : MonoBehaviour
                 DisplayOption(bodyTab);
                 break;
         }
+    }
+
+    public void DisplayError(string key, Errors error)
+    {
+        string errorText = GetErrorCode(error) + " " + key + " " + ErrorDescriptions.GetErrorDescription(error);
+        Error json = new Error(errorText);
+        ChangeResponse(JsonConvert.SerializeObject(json, Formatting.Indented));
+    }
+
+    public static string GetErrorCode(Errors error)
+    {
+        return $"[ERR{(int)error:D3}]";
     }
 }

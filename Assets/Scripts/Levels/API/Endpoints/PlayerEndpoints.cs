@@ -18,11 +18,8 @@ public class PlayerEndpoints : MonoBehaviour
     {
         pipemanController = GetComponent<ApiController>().GetPipeman();
 
-        string json = "{\"name\": \"Bob\", \"xCord\": \"1\", \"yCord\": \"1\"}";
-        PlayerPut(json);
-        json = "{\"name\": \"Test\"}";
-        PlayerPost(json);
-        PlayerGet();
+        string json = "{\"name\": \"Bob\", \"xCord\": \"1.1\", \"yCord\": \"1\"}";
+        PlayerPut(json);               
     }
 
     public void PlayerGet()
@@ -52,14 +49,6 @@ public class PlayerEndpoints : MonoBehaviour
 
                 Debug.Log(ObjectToJson(player));
             }
-            else
-            {
-                Debug.Log("Error");
-            }
-        }
-        else
-        {
-            Debug.Log("Error");
         }
     }
 
@@ -67,6 +56,7 @@ public class PlayerEndpoints : MonoBehaviour
     {
         if (IsValidJson(json) && IsPlayerExists() && VariablesValidation(json))
         {
+            bool editObject = true;
             string name = null;
             string x = null;
             string y = null;
@@ -76,24 +66,33 @@ public class PlayerEndpoints : MonoBehaviour
             foreach (KeyValuePair<string, string> variable in jsonData)
             {
                 if (variable.Key == PlayerVariables.name.ToString())
+                {
                     name = variable.Value;
-
+                    if (!CheckName(name))
+                        editObject = false;
+                }
                 if (variable.Key == PlayerVariables.xCords.ToString())
+                {
                     x = variable.Value;
+                    if (!CheckCord(x))
+                        editObject = false;
+                }
             }
 
-            if (CheckName(name) || CheckCord(x) || CheckCord(y))
+            if (editObject)
+            {
                 JsonConvert.PopulateObject(json, player);
 
-            if(x != null || y != null)
-            {
-                if (x == null)
-                    x = player.xCord;
+                if (x != null || y != null)
+                {
+                    if (x == null)
+                        x = player.xCord;
 
-                if (y == null)
-                    y = player.yCord;
+                    if (y == null)
+                        y = player.yCord;
 
-                // update player position
+                    // update player position
+                }
             }
         }
     }
@@ -105,51 +104,70 @@ public class PlayerEndpoints : MonoBehaviour
 
     private bool CheckName(string name)
     {
-        if (string.IsNullOrWhiteSpace(name) || name.Length > 10)
+        Errors error = Errors.None;
+
+        if (string.IsNullOrWhiteSpace(name))
+            error = Errors.Null;
+
+        else if (name.Length > 10)
+            error = Errors.LongName;
+
+        if (error != Errors.None)
+        {
+            pipemanController.DisplayError(nameof(name), error);
             return false;
+        }
         else
             return true;
     }
 
-    private bool CheckCord(string cord)
+    private bool CheckCord(string coordinate)
     {
-        if (string.IsNullOrWhiteSpace(cord))
-            return false;
-
+        Errors error = Errors.None;
         int integerCord;
 
-        if (int.TryParse(cord, out integerCord))
-            return true;
-        else
+        if (string.IsNullOrWhiteSpace(coordinate))
+            error = Errors.Null;
+
+        else if (int.TryParse(coordinate, out integerCord))
+            error = Errors.NotInteger;
+
+        if (error != Errors.None)
+        {
+            pipemanController.DisplayError(nameof(coordinate), error);
             return false;
+        }
+        else
+            return true;
     }
 
     private bool IsPlayerExists()
     {
-        if (player == null)
+        if (player != null)
+        {
+            pipemanController.DisplayError(nameof(player), Errors.ObjectExists);
             return false;
+        }
         else
             return true;
     }
 
-    public bool IsValidJson(string json)
+    public bool IsValidJson(string body)
     {
-        if (string.IsNullOrWhiteSpace(json))
+        if (string.IsNullOrWhiteSpace(body))
+        {
+            pipemanController.DisplayError(nameof(body), Errors.Null);
             return false;
+        }
 
         try
         {
-            JToken.Parse(json);
+            JToken.Parse(body);
             return true;
-        }
-        catch (JsonReaderException jex)
+        }    
+        catch (Exception) 
         {
-            Console.WriteLine(jex.Message);
-            return false;
-        }
-        catch (Exception ex) 
-        {
-            Console.WriteLine(ex.ToString());
+            pipemanController.DisplayError(nameof(body), Errors.Null);
             return false;
         }
     }
@@ -161,7 +179,10 @@ public class PlayerEndpoints : MonoBehaviour
         foreach (KeyValuePair<string, string> variable in jsonData)
         {
             if (!acceptedVariables.Contains(variable.Key))
+            {
+                pipemanController.DisplayError(variable.Key, Errors.WrongVariable);
                 return false;
+            }      
         }
         return true;
     }
