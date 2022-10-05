@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerEndpoints : MonoBehaviour
@@ -11,15 +12,14 @@ public class PlayerEndpoints : MonoBehaviour
 
     [SerializeField] private GameObject playerPrefab;
 
-    private List<string> acceptedVariables = new List<string> { PlayerVariables.name.ToString(), PlayerVariables.xCords.ToString() };
-    private Dictionary<string, string> jsonData;
+    private List<string> acceptedVariables = Enum.GetNames(typeof(PlayerVariables)).ToList();
 
     private void Start()
     {
         pipemanController = GetComponent<ApiController>().GetPipeman();
 
         string json = "{\"name\": \"Bob\", \"xCord\": \"1.1\", \"yCord\": \"1\"}";
-        PlayerPut(json);               
+        PlayerPut(json);
     }
 
     public void PlayerGet()
@@ -34,18 +34,18 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void PlayerPut(string json)
     {
-        if(IsValidJson(json) && IsPlayerExists())
+        if (IsValidJson(json) && IsPlayerExists())
         {
             PlayerConstructor jsonData = JsonConvert.DeserializeObject<PlayerConstructor>(json);
 
             string name = jsonData.name;
-            string x = jsonData.xCord;
-            string y = jsonData.yCord;
+            string x = jsonData.coordinateX;
+            string y = jsonData.coordinateY;
 
             if (CheckName(name) && CheckCord(x) && CheckCord(y))
             {
-                player = new PlayerConstructor(name, x, y, true);
-                Instantiate(playerPrefab, new Vector2((float)int.Parse(jsonData.xCord), (float)int.Parse(jsonData.yCord)), transform.rotation);
+                player = new PlayerConstructor(name, x, y);
+                Instantiate(playerPrefab, new Vector2((float)int.Parse(x), (float)int.Parse(y)), transform.rotation);
 
                 Debug.Log(ObjectToJson(player));
             }
@@ -57,7 +57,6 @@ public class PlayerEndpoints : MonoBehaviour
         if (IsValidJson(json) && IsPlayerExists() && VariablesValidation(json))
         {
             bool editObject = true;
-            string name = null;
             string x = null;
             string y = null;
 
@@ -65,13 +64,12 @@ public class PlayerEndpoints : MonoBehaviour
 
             foreach (KeyValuePair<string, string> variable in jsonData)
             {
-                if (variable.Key == PlayerVariables.name.ToString())
+                if (variable.Key.ToLower() == GetPlayerVariable(PlayerVariables.Name))
                 {
-                    name = variable.Value;
-                    if (!CheckName(name))
+                    if (!CheckName(variable.Key))
                         editObject = false;
                 }
-                if (variable.Key == PlayerVariables.xCords.ToString())
+                if (variable.Key.ToLower() == GetPlayerVariable(PlayerVariables.CoordinateX))
                 {
                     x = variable.Value;
                     if (!CheckCord(x))
@@ -86,10 +84,10 @@ public class PlayerEndpoints : MonoBehaviour
                 if (x != null || y != null)
                 {
                     if (x == null)
-                        x = player.xCord;
+                        x = player.coordinateX;
 
                     if (y == null)
-                        y = player.yCord;
+                        y = player.coordinateY;
 
                     // update player position
                 }
@@ -164,8 +162,8 @@ public class PlayerEndpoints : MonoBehaviour
         {
             JToken.Parse(body);
             return true;
-        }    
-        catch (Exception) 
+        }
+        catch (Exception)
         {
             pipemanController.DisplayError(nameof(body), Errors.Null);
             return false;
@@ -182,8 +180,13 @@ public class PlayerEndpoints : MonoBehaviour
             {
                 pipemanController.DisplayError(variable.Key, Errors.WrongVariable);
                 return false;
-            }      
+            }
         }
         return true;
+    }
+
+    private string GetPlayerVariable(PlayerVariables variable)
+    {
+        return variable.ToString().ToLower();
     }
 }

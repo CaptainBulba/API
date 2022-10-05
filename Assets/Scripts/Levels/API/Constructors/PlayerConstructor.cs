@@ -4,36 +4,17 @@ using System;
 public class PlayerConstructor
 {
     public bool success = true;
-    public int id;
     private static int idCounter = 0;
     public string name { get; set; }
-    public string xCord;
-    public string yCord;
+    public string coordinateX;
+    public string coordinateY;
     public bool activeFlag;
 
-    public PlayerConstructor(string name, string xCord, string yCord, bool includeId)
+    public PlayerConstructor(string name, string coordinateX, string coordinateY)
     {
         this.name = name;
-        this.xCord = xCord;
-        this.yCord = yCord;
+        this.coordinateX = coordinateX;
+        this.coordinateY = coordinateY;
         activeFlag = true;
-
-        if (includeId)
-            this.id = GenerateNewId();
-    }
-
-    private int GenerateNewId()
-    {
-        return idCounter++;
-    }
-
-    public int GetObjectId()
-    {
-        return id;
-    }
-
-    public string GetObjectName()
-    {
-        return name;
     }
 }
