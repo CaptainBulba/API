@@ -15,6 +15,8 @@ public class Pipeman : MonoBehaviour
     [SerializeField] private GameObject authTab;
     [SerializeField] private GameObject bodyTab;
 
+    [SerializeField] private GameObject screenButtons;
+
     private GameObject[] tabs;
 
     [SerializeField] private ApiController apiController;
@@ -108,5 +110,11 @@ public class Pipeman : MonoBehaviour
     public static string GetErrorCode(Errors error)
     {
         return $"[ERR{(int)error:D3}]";
+    }
+
+    public void ClosePipeman()
+    {
+        gameObject.SetActive(false);
+        screenButtons.SetActive(true);
     }
 }
