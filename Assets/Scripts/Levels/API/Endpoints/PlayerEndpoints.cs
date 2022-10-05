@@ -24,12 +24,10 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void GetPlayer()
     {
-        if (!IsPlayerExists())
+        if (IsPlayerExists())
         {
             pipemanController.ChangeResponse(ObjectToJson(player));
         }
-        else
-            Debug.Log("Player does not exist");
     }
 
     public void PutPlayer(string json)
@@ -56,7 +54,7 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void PostPlayer(string json)
     {
-        if (IsValidJson(json) && !IsPlayerExists() && VariablesValidation(json))
+        if (IsValidJson(json) && IsPlayerExists() &&  VariablesValidation(json))
         {
             bool editObject = true;
             string x = null;
@@ -66,6 +64,7 @@ public class PlayerEndpoints : MonoBehaviour
 
             foreach (KeyValuePair<string, string> variable in jsonData)
             {
+                Debug.Log((variable.Key.ToLower() == GetPlayerVariable(PlayerVariables.Name)));
                 if (variable.Key.ToLower() == GetPlayerVariable(PlayerVariables.Name))
                 {
                     if (!CheckName(variable.Key))
@@ -77,11 +76,18 @@ public class PlayerEndpoints : MonoBehaviour
                     if (!CheckCord(x))
                         editObject = false;
                 }
+                if (variable.Key.ToLower() == GetPlayerVariable(PlayerVariables.CoordinateY))
+                {
+                    y = variable.Value;
+                    if (!CheckCord(y))
+                        editObject = false;
+                }
             }
 
             if (editObject)
             {
                 JsonConvert.PopulateObject(json, player);
+                pipemanController.ChangeResponse(ObjectToJson(player));
 
                 if (x != null || y != null)
                 {
@@ -178,7 +184,7 @@ public class PlayerEndpoints : MonoBehaviour
 
         foreach (KeyValuePair<string, string> variable in jsonData)
         {
-            if (!acceptedVariables.Contains(variable.Key))
+            if (!acceptedVariables.Contains(variable.Key, StringComparer.OrdinalIgnoreCase))
             {
                 pipemanController.DisplayError(variable.Key, Errors.WrongVariable);
                 return false;
