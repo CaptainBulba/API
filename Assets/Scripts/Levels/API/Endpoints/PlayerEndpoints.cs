@@ -18,13 +18,13 @@ public class PlayerEndpoints : MonoBehaviour
     {
         pipemanController = GetComponent<ApiController>().GetPipeman();
 
-        string json = "{\"name\": \"Bob\", \"xCord\": \"1.1\", \"yCord\": \"1\"}";
+        string json = "{\"name\": \"Bob\", \"xCord\": \"1\", \"yCord\": \"1\"}";
         PlayerPut(json);
     }
 
     public void PlayerGet()
     {
-        if (IsPlayerExists())
+        if (!IsPlayerExists())
         {
             pipemanController.ChangeResponse(ObjectToJson(player));
         }
@@ -34,7 +34,7 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void PlayerPut(string json)
     {
-        if (IsValidJson(json) && IsPlayerExists())
+        if (IsValidJson(json) && !IsPlayerExists())
         {
             PlayerConstructor jsonData = JsonConvert.DeserializeObject<PlayerConstructor>(json);
 
@@ -54,7 +54,7 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void PlayerPost(string json)
     {
-        if (IsValidJson(json) && IsPlayerExists() && VariablesValidation(json))
+        if (IsValidJson(json) && !IsPlayerExists() && VariablesValidation(json))
         {
             bool editObject = true;
             string x = null;
@@ -144,10 +144,10 @@ public class PlayerEndpoints : MonoBehaviour
         if (player != null)
         {
             pipemanController.DisplayError(nameof(player), Errors.ObjectExists);
-            return false;
+            return true;
         }
         else
-            return true;
+            return false;
     }
 
     public bool IsValidJson(string body)
