@@ -18,11 +18,11 @@ public class PlayerEndpoints : MonoBehaviour
     {
         pipemanController = GetComponent<ApiController>().GetPipeman();
 
-        string json = "{\"name\": \"Bob\", \"xCord\": \"1\", \"yCord\": \"1\"}";
-        PlayerPut(json);
+        string json = "{\"name\": \"Bob\", \"coordinateX\": \"1\", \"coordinateY\": \"1\"}";
+        PutPlayer(json);
     }
 
-    public void PlayerGet()
+    public void GetPlayer()
     {
         if (!IsPlayerExists())
         {
@@ -32,7 +32,7 @@ public class PlayerEndpoints : MonoBehaviour
             Debug.Log("Player does not exist");
     }
 
-    public void PlayerPut(string json)
+    public void PutPlayer(string json)
     {
         if (IsValidJson(json) && !IsPlayerExists())
         {
@@ -41,6 +41,8 @@ public class PlayerEndpoints : MonoBehaviour
             string name = jsonData.name;
             string x = jsonData.coordinateX;
             string y = jsonData.coordinateY;
+
+            Debug.Log(x + " " + y);
 
             if (CheckName(name) && CheckCord(x) && CheckCord(y))
             {
@@ -52,7 +54,7 @@ public class PlayerEndpoints : MonoBehaviour
         }
     }
 
-    public void PlayerPost(string json)
+    public void PostPlayer(string json)
     {
         if (IsValidJson(json) && !IsPlayerExists() && VariablesValidation(json))
         {
@@ -127,7 +129,7 @@ public class PlayerEndpoints : MonoBehaviour
         if (string.IsNullOrWhiteSpace(coordinate))
             error = Errors.Null;
 
-        else if (int.TryParse(coordinate, out integerCord))
+        else if (!int.TryParse(coordinate, out integerCord))
             error = Errors.NotInteger;
 
         if (error != Errors.None)

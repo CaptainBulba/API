@@ -4,8 +4,7 @@ using System;
 public class PlayerConstructor
 {
     public bool success = true;
-    private static int idCounter = 0;
-    public string name { get; set; }
+    public string name;
     public string coordinateX;
     public string coordinateY;
     public bool activeFlag;

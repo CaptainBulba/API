@@ -43,11 +43,14 @@ public class Pipeman : MonoBehaviour
         switch (fullEndpoint)
         {
             case EndpointConstants.getPlayer:
-                playerEndpoints.PlayerGet();
+                playerEndpoints.GetPlayer();
                 break;
 
             case EndpointConstants.putPlayer:
-                playerEndpoints.PlayerPut(body);
+                playerEndpoints.PutPlayer(body);
+                break;
+            case EndpointConstants.postPlayer:
+                playerEndpoints.PostPlayer(body);
                 break;
 
             default:
