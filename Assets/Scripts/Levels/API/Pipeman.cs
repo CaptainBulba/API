@@ -116,5 +116,14 @@ public class Pipeman : MonoBehaviour
     {
         gameObject.SetActive(false);
         screenButtons.SetActive(true);
+
+        if(apiController.actions.Count != 0)
+        {
+            foreach (var action in apiController.actions)
+            {
+                action.Run();
+            }
+            apiController.actions.Clear();
+        }
     }
 }

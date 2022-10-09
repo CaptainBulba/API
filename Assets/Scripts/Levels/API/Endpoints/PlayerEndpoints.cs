@@ -8,16 +8,18 @@ using UnityEngine;
 public class PlayerEndpoints : MonoBehaviour
 {
     private PlayerConstructor player;
-    private Pipeman pipemanController;
-
+    private GameObject playerObject;
     [SerializeField] private GameObject playerPrefab;
+
+    private ApiController apiController;
+    private Pipeman pipemanController;
 
     private List<string> acceptedVariables = Enum.GetNames(typeof(PlayerVariables)).ToList();
 
     private void Start()
     {
-        pipemanController = GetComponent<ApiController>().GetPipeman();
-
+        apiController = GetComponent<ApiController>();
+        pipemanController = apiController.GetPipeman();
         string json = "{\"name\": \"Bob\", \"coordinateX\": \"1\", \"coordinateY\": \"1\"}";
         PutPlayer(json);
     }
@@ -43,7 +45,8 @@ public class PlayerEndpoints : MonoBehaviour
             if (CheckName(name) && CheckCord(x) && CheckCord(y))
             {
                 player = new PlayerConstructor(name, x, y);
-                Instantiate(playerPrefab, new Vector2((float)int.Parse(x), (float)int.Parse(y)), transform.rotation);
+                playerObject = Instantiate(playerPrefab, new Vector2((float)int.Parse(x), (float)int.Parse(y)), transform.rotation);
+                playerObject.AddComponent<Player>();
             }
         }
     }
@@ -92,7 +95,8 @@ public class PlayerEndpoints : MonoBehaviour
                     if (y == null)
                         y = player.coordinateY;
 
-                    // update player position
+                    MovePlayer move = new MovePlayer(playerObject, (float)int.Parse(x), (float)int.Parse(y));
+                    apiController.actions.Add(move);
                 }
             }
         }
