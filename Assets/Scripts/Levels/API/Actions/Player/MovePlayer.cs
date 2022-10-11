@@ -5,7 +5,6 @@ public class MovePlayer : IUserAction
     private GameObject player;
     private float x;
     private float y;
-    private float speed = 5f;
 
     public MovePlayer(GameObject player, float x, float y)
     {

@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerEndpoints : MonoBehaviour
 {
     private PlayerConstructor player;
-    private GameObject playerObject;
+    
     [SerializeField] private GameObject playerPrefab;
 
     private ApiController apiController;
@@ -45,8 +45,15 @@ public class PlayerEndpoints : MonoBehaviour
             if (CheckName(name) && CheckCord(x) && CheckCord(y))
             {
                 player = new PlayerConstructor(name, x, y);
-                playerObject = Instantiate(playerPrefab, new Vector2((float)int.Parse(x), (float)int.Parse(y)), transform.rotation);
+                
+                GameObject playerObject = Instantiate(playerPrefab, new Vector2((float)int.Parse(x), (float)int.Parse(y)), transform.rotation);
+                
+                playerObject.SetActive(false);
                 playerObject.AddComponent<Player>();
+                apiController.SetPlayer(playerObject);
+
+                CreatePlayer create = new CreatePlayer(playerObject);
+                apiController.actions.Add(create);
             }
         }
     }
@@ -95,7 +102,7 @@ public class PlayerEndpoints : MonoBehaviour
                     if (y == null)
                         y = player.coordinateY;
 
-                    MovePlayer move = new MovePlayer(playerObject, (float)int.Parse(x), (float)int.Parse(y));
+                    MovePlayer move = new MovePlayer(apiController.GetPlayer(), (float)int.Parse(x), (float)int.Parse(y));
                     apiController.actions.Add(move);
                 }
             }
