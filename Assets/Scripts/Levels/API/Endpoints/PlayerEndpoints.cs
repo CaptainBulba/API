@@ -20,7 +20,7 @@ public class PlayerEndpoints : MonoBehaviour
     {
         apiController = GetComponent<ApiController>();
         pipemanController = apiController.GetPipeman();
-        string json = "{\"name\": \"Bob\", \"coordinateX\": \"1\", \"coordinateY\": \"1\"}";
+        string json = "{\"name\": \"Bob\", \"coordinateX\": \"10\", \"coordinateY\": \"1\"}";
         PutPlayer(json);
     }
 
@@ -52,7 +52,7 @@ public class PlayerEndpoints : MonoBehaviour
                 playerObject.AddComponent<Player>();
                 apiController.SetPlayer(playerObject);
 
-                CreatePlayer create = new CreatePlayer(playerObject);
+                CreatePlayer create = new CreatePlayer(playerObject, name, int.Parse(x), int.Parse(y));
                 apiController.actions.Add(create);
             }
         }
@@ -63,6 +63,7 @@ public class PlayerEndpoints : MonoBehaviour
         if (IsValidJson(json) && IsPlayerExists() &&  VariablesValidation(json))
         {
             bool editObject = true;
+            string name = null;
             string x = null;
             string y = null;
 
@@ -72,6 +73,7 @@ public class PlayerEndpoints : MonoBehaviour
             {
                 if (variable.Key.ToLower() == GetPlayerVariable(PlayerVariables.Name))
                 {
+                    name = variable.Value;
                     if (!CheckName(variable.Key))
                         editObject = false;
                 }
@@ -104,6 +106,12 @@ public class PlayerEndpoints : MonoBehaviour
 
                     MovePlayer move = new MovePlayer(apiController.GetPlayer(), (float)int.Parse(x), (float)int.Parse(y));
                     apiController.actions.Add(move);
+                }
+
+                if(name != null)
+                {
+                    ChangeName changeName = new ChangeName(apiController.GetPlayer(), name);
+                    apiController.actions.Add(changeName);
                 }
             }
         }

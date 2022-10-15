@@ -94,12 +94,12 @@ GameObject:
   - component: {fileID: 8181660810716553966}
   - component: {fileID: 2169719126098913248}
   m_Layer: 0
-  m_Name: Text
+  m_Name: Coordinates
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7204131324266418792
 Transform:
   m_ObjectHideFlags: 0
@@ -163,7 +163,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5135758574879567633}
-  m_Text: 'x: 10, y: 10'
+  m_Text: 10, 10
   m_OffsetZ: 0
   m_CharacterSize: 0.1
   m_LineSpacing: 1
@@ -176,7 +176,7 @@ TextMesh:
   m_Font: {fileID: 0}
   m_Color:
     serializedVersion: 2
-    rgba: 2013265920
+    rgba: 1392508928
 --- !u!1 &5456417820636998976
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,6 +279,7 @@ MonoBehaviour:
   offsetColor: {r: 1, g: 0.49803922, b: 0.49803922, a: 1}
   ren: {fileID: 7043396653462351867}
   highlight: {fileID: 1575799943873780308}
+  cordText: {fileID: 2169719126098913248}
 --- !u!61 &6217031465268115771
 BoxCollider2D:
   m_ObjectHideFlags: 0

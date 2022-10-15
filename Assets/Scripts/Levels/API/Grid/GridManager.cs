@@ -25,6 +25,7 @@ public class GridManager : MonoBehaviour
 
                 spawnedTile.name = $"Tile {x} {y}";
                 spawnedTile.transform.parent = transform;
+                spawnedTile.InitiateCoordinates(x, y);
 
                 tiles[new Vector2(x, y)] = spawnedTile;
             }
