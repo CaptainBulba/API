@@ -17,9 +17,7 @@ public class GridManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // save the camera as public field if you using not the main camera
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        // get the collision point of the ray with the z = 0 plane
         Vector3 worldPoint = ray.GetPoint(-ray.origin.z / ray.direction.z);
         Vector3Int position = grid.WorldToCell(worldPoint);
 
@@ -30,12 +28,5 @@ public class GridManager : MonoBehaviour
         }
 
         Debug.Log(position);
-
-       
-
-
-        player.transform.position = new Vector2 (position.x + 0.5f, position.y + 0.5f);
-
-
     }
 }
