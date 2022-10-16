@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     private float speed = 2f;
     private Vector2 currentPos;
     private Vector2 targetPos;
+    private float extraCord = 0.5f; 
 
     private bool activatePlayer;
     
@@ -39,13 +40,13 @@ public class Player : MonoBehaviour
             float alphaValue = Mathf.Lerp(0f, 1f, currentTime / activateTime);
 
             GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-            nameText.color = new Color(1f, 1f, 1f, alphaValue);
+            nameText.color = new Color(0f, 0f, 0f, alphaValue);
         }
     }
 
     public void SetTargetPosition(float x, float y)
     {
-        targetPos = new Vector2(x + 0.5f, y + 0.5f);
+        targetPos = new Vector2(x + extraCord, y + extraCord);
     }
 
     public void ActivatePlayer(string name,int x, int y)
@@ -56,7 +57,7 @@ public class Player : MonoBehaviour
         canvas.worldCamera = FindObjectOfType<Camera>();
 
         nameText.text = name;
-        transform.position = new Vector2(x, y);
+        transform.position = new Vector2(x + extraCord, y + extraCord);
        
         activatePlayer = true;
     }

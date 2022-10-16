@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -9,13 +7,12 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Tilemap ground;
     [SerializeField] private GameObject player;
 
-    void Start()
+    private void Start()
     {
         grid = GetComponent<Grid>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Vector3 worldPoint = ray.GetPoint(-ray.origin.z / ray.direction.z);

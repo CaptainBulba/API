@@ -20,7 +20,7 @@ public class PlayerEndpoints : MonoBehaviour
     {
         apiController = GetComponent<ApiController>();
         pipemanController = apiController.GetPipeman();
-        string json = "{\"name\": \"Bob\", \"coordinateX\": \"10\", \"coordinateY\": \"1\"}";
+        string json = "{\"name\": \"Bob\", \"coordinateX\": \"3\", \"coordinateY\": \"1\"}";
         PutPlayer(json);
     }
 
