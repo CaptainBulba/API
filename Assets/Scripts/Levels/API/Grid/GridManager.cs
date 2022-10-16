@@ -1,44 +1,41 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] private int width, height;
-    [SerializeField] private Tile tilePrefab;
-    [SerializeField] private Transform cam;
+    private Grid grid;
+    [SerializeField] private Tilemap ground;
+    [SerializeField] private GameObject player;
 
-    private Dictionary<Vector2, Tile> tiles;
-
-    private void Start()
+    void Start()
     {
-        GenerateGrid();
+        grid = GetComponent<Grid>();
     }
 
-    private void GenerateGrid()
+    // Update is called once per frame
+    void Update()
     {
-        tiles = new Dictionary<Vector2, Tile>();
-        for (int x = 0; x < width; x++)
+        // save the camera as public field if you using not the main camera
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        // get the collision point of the ray with the z = 0 plane
+        Vector3 worldPoint = ray.GetPoint(-ray.origin.z / ray.direction.z);
+        Vector3Int position = grid.WorldToCell(worldPoint);
+
+        if (!ground.HasTile(position))
         {
-            for (int y = 0; y < height; y++)
-            {
-                var spawnedTile = Instantiate(tilePrefab, new Vector3(x, y), Quaternion.identity);
-
-                spawnedTile.name = $"Tile {x} {y}";
-                spawnedTile.transform.parent = transform;
-                spawnedTile.InitiateCoordinates(x, y);
-
-                tiles[new Vector2(x, y)] = spawnedTile;
-            }
+            Debug.Log("No tile");
+            return;
         }
 
-         cam.transform.position = new Vector3((float)width / 2 - 0.5f, (float)height / 2 - 0.5f, -10);
-    }
+        Debug.Log(position);
 
-    public Tile GetTileAtPosition(Vector2 pos)
-    {
-        if (tiles.TryGetValue(pos, out var tile))
-            return tile;
+       
 
-        return null;
+
+        player.transform.position = new Vector2 (position.x + 0.5f, position.y + 0.5f);
+
+
     }
 }
