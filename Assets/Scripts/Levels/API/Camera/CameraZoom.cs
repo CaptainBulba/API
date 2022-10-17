@@ -9,6 +9,8 @@ public class CameraZoom : MonoBehaviour
     private float yVelocity = 0.0f;
     [SerializeField] private float zoomSpeed = 10;
 
+
+
     private void Start()
     {
         cam = Camera.main;

@@ -4,7 +4,7 @@ using UnityEngine;
 public class ApiController : MonoBehaviour
 {
     [SerializeField] private Pipeman pipemanController;
-    [SerializeField] private GridManager gridManager;
+    [SerializeField] private GameObject screenButtons;
 
     private GameObject playerObject;
 
@@ -22,9 +22,9 @@ public class ApiController : MonoBehaviour
         return pipemanController;
     }
 
-    public GridManager GetGridManager()
+    public GameObject GetScreenButtons()
     {
-        return gridManager;
+        return screenButtons;
     }
 
     public PlayerEndpoints GetPlayerEndpoints()

@@ -2,42 +2,30 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    private Vector3 Origin;
-    private Vector3 Difference;
-    private Vector3 ResetCamera;
-
-    private bool drag = false;
-
-
-
-    private void Start()
-    {
-        ResetCamera = Camera.main.transform.position;
-    }
-
+    private Vector3 oldPos;
+    private Vector3 panOrigin;
+    private float panSpeed = 26;
+    private bool bDragging = false;
 
     private void LateUpdate()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(2))
         {
-            Difference = (Camera.main.ScreenToWorldPoint(Input.mousePosition)) - Camera.main.transform.position;
-            if (drag == false)
-            {
-                drag = true;
-                Origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            }
-        }
-        else
-        {
-            drag = false;
+            bDragging = true;
+            oldPos = transform.position;
+            panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         }
 
-        if (drag)
+        if (Input.GetMouseButton(2))
         {
-            Camera.main.transform.position = Origin - Difference * 0.5f;
+            Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            pos = pos - panOrigin;
+            transform.position = oldPos + -pos * panSpeed;
         }
 
-        if (Input.GetMouseButton(1))
-            Camera.main.transform.position = ResetCamera;
+        if (Input.GetMouseButtonUp(2))
+        {
+            bDragging = false;
+        }
     }
 }
