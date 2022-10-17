@@ -4,28 +4,21 @@ public class CameraMove : MonoBehaviour
 {
     private Vector3 oldPos;
     private Vector3 panOrigin;
-    private float panSpeed = 26;
-    private bool bDragging = false;
+    private float panSpeed = 10;
 
     private void LateUpdate()
     {
-        if (Input.GetMouseButtonDown(2))
+        if (Input.GetMouseButtonDown(1))
         {
-            bDragging = true;
             oldPos = transform.position;
             panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         }
 
-        if (Input.GetMouseButton(2))
+        if (Input.GetMouseButton(1))
         {
             Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
             pos = pos - panOrigin;
             transform.position = oldPos + -pos * panSpeed;
-        }
-
-        if (Input.GetMouseButtonUp(2))
-        {
-            bDragging = false;
         }
     }
 }
