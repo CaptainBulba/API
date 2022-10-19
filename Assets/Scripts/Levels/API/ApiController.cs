@@ -9,12 +9,14 @@ public class ApiController : MonoBehaviour
     private GameObject playerObject;
 
     private PlayerEndpoints playerEndpoints;
+    private QuestManager questManager;
 
     [HideInInspector] public List<IUserAction> actions = new List<IUserAction>();
 
     private void Start()
     {
         playerEndpoints = GetComponent<PlayerEndpoints>();
+        questManager = GetComponent<QuestManager>();
     }
 
     public Pipeman GetPipeman()
@@ -30,6 +32,11 @@ public class ApiController : MonoBehaviour
     public PlayerEndpoints GetPlayerEndpoints()
     {
         return playerEndpoints;
+    }
+
+    public QuestManager GetQuestManager()
+    {
+        return questManager;
     }
 
     public GameObject GetPlayer()

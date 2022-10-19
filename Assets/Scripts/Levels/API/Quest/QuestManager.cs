@@ -23,7 +23,7 @@ public class QuestManager : MonoBehaviour
 
     public void DisplayQuest()
     {
-        string filePath = "Assets/Texts/Quests/Quest/quest_" + currentQuest + ".json";
+        string filePath = "Assets/Texts/Quests/quest_" + currentQuest + ".json";
 
         StreamReader reader = new StreamReader(filePath);
         string json = reader.ReadToEnd();
@@ -32,6 +32,11 @@ public class QuestManager : MonoBehaviour
 
         questTitle.text = (string)jsonData["title"];
         questDescription.text = (string)jsonData["description"];
+    }
+
+    public int GetCurrentQuest()
+    {
+        return currentQuest;
     }
 
     public void CloseQuest()

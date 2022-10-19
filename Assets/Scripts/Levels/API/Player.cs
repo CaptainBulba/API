@@ -86,7 +86,6 @@ public class Player : MonoBehaviour
             nameText.text += c;
             yield return new WaitForSeconds(typingTimer);
         }
-      
     }
 
     private void AssignUiElements()
