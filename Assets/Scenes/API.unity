@@ -7741,6 +7741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ground: {fileID: 364836511}
+  walls: {fileID: 1505419432}
   player: {fileID: 665447663}
   cordText: {fileID: 305615545}
 --- !u!1 &1144424451

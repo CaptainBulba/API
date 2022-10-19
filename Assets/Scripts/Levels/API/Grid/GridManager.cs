@@ -6,6 +6,7 @@ public class GridManager : MonoBehaviour
 {
     private Grid grid;
     [SerializeField] private Tilemap ground;
+    [SerializeField] private Tilemap walls;
     [SerializeField] private GameObject player;
     [SerializeField] private TextMeshProUGUI cordText;
 
@@ -20,7 +21,7 @@ public class GridManager : MonoBehaviour
         Vector3 worldPoint = ray.GetPoint(-ray.origin.z / ray.direction.z);
         Vector3Int position = grid.WorldToCell(worldPoint);
 
-        if (ground.HasTile(position))
+        if (ground.HasTile(position) && walls.HasTile(position))
             cordText.text = "Coordinates: " + position.x + ", " + position.y;
     }
 }
