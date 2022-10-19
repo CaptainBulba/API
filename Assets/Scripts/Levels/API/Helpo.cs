@@ -1,6 +1,7 @@
 using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.IO;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -17,19 +18,20 @@ public class Helpo : MonoBehaviour
     private int currentQuest; 
 
     private JObject jsonData;
+    private int jsonMessageLenght;
 
     private float typingTimer = 0.125f;
 
     private bool isShowingMessage = false;
 
-    private IEnumerator co;
+    private IEnumerator playMessage;
 
     private void Start()
     {
         questManager = apiController.GetQuestManager();
         currentQuest = questManager.GetCurrentQuest();
         messageText = messageObject.GetComponent<TextMeshProUGUI>();
-        co = PlayMessage();
+        playMessage = PlayMessage();
     }
 
     private void OnMouseOver()
@@ -44,11 +46,19 @@ public class Helpo : MonoBehaviour
     private IEnumerator PlayMessage()
     {
         
-
         if (currentQuest != questManager.GetCurrentQuest() || jsonData == null)
         {
             string filePath = "Assets/Texts/Helpo/helpo_" + questManager.GetCurrentQuest() + ".json";
             jsonData = JsonFunctions.LoadJson(filePath);
+            jsonMessageLenght = JsonFunctions.CountArray(jsonData["text"]);
+        }
+
+        if(jsonMessageLenght == currentMessage)
+        {
+            nameObject.SetActive(true);
+            messageObject.SetActive(false);
+            isShowingMessage = false;
+            yield break;
         }
 
         string text = (string)jsonData["text"][currentMessage]["message"];

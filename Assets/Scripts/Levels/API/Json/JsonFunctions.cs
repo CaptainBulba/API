@@ -7,7 +7,12 @@ public class JsonFunctions
     {
         StreamReader reader = new StreamReader(file);
         string json = reader.ReadToEnd();
-
         return JObject.Parse(json);
+    }
+
+    public static int CountArray(JToken jsonObject)
+    {
+        JArray array = jsonObject as JArray;
+        return array.Count;
     }
 }
