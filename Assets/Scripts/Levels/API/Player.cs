@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     private float activateTime = 1.5f;
     private float typingTimer = 0.125f;
 
+    private string wallTag = "Wall";
+
     private void Start()
     {
         apiController = FindObjectOfType<ApiController>();
@@ -46,6 +48,7 @@ public class Player : MonoBehaviour
 
     public void SetTargetPosition(float x, float y)
     {
+        currentPos = transform.position;
         targetPos = new Vector2(x + extraCord, y + extraCord);
     }
 
@@ -85,6 +88,15 @@ public class Player : MonoBehaviour
         {
             nameText.text += c;
             yield return new WaitForSeconds(typingTimer);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.CompareTag(wallTag))
+        {
+            transform.position = currentPos;
+            targetPos = currentPos;
         }
     }
 
