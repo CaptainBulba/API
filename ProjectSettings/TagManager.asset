@@ -5,8 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Wall
-  - Player Decoy
   - Background
+  - PlayerDecoy
+  - Button
   layers:
   - Default
   - TransparentFX

@@ -13836,7 +13836,7 @@ GameObject:
   - component: {fileID: 5898344724342573584}
   m_Layer: 0
   m_Name: Player Decoy
-  m_TagString: Player Decoy
+  m_TagString: PlayerDecoy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

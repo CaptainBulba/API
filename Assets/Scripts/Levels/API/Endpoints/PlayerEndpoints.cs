@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class PlayerEndpoints : MonoBehaviour
 {
+    private EndpointsChecks endpointsChecks;
+
     private PlayerConstructor player;
     
     [SerializeField] private GameObject playerPrefab;
@@ -20,6 +22,8 @@ public class PlayerEndpoints : MonoBehaviour
     {
         apiController = GetComponent<ApiController>();
         pipeman = apiController.GetPipeman();
+        endpointsChecks = GetComponent<EndpointsChecks>();
+
         string json = "{\"name\": \"Bob\", \"coordinateX\": \"3\", \"coordinateY\": \"1\"}";
         PutPlayer(json);
     }
@@ -34,7 +38,7 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void PutPlayer(string json)
     {
-        if (IsValidJson(json) && !IsPlayerExists())
+        if (endpointsChecks.IsValidJson(json) && !IsPlayerExists())
         {
             PlayerConstructor jsonData = JsonConvert.DeserializeObject<PlayerConstructor>(json);
 
@@ -60,7 +64,7 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void PostPlayer(string json)
     {
-        if (IsValidJson(json) && IsPlayerExists() &&  VariablesValidation(json))
+        if (endpointsChecks.IsValidJson(json) && IsPlayerExists() && endpointsChecks.VariablesValidation(json, acceptedVariables))
         {
             bool editObject = true;
             string name = null;
@@ -74,7 +78,7 @@ public class PlayerEndpoints : MonoBehaviour
                 if (variable.Key.ToLower() == GetPlayerVariable(PlayerVariables.Name))
                 {
                     name = variable.Value;
-                    if (!CheckName(variable.Key))
+                    if (!CheckName(variable.Value))
                         editObject = false;
                 }
                 if (variable.Key.ToLower() == GetPlayerVariable(PlayerVariables.CoordinateX))
@@ -170,41 +174,6 @@ public class PlayerEndpoints : MonoBehaviour
         }
         else
             return false;
-    }
-
-    public bool IsValidJson(string body)
-    {
-        if (string.IsNullOrWhiteSpace(body))
-        {
-            pipeman.DisplayError(nameof(body), Errors.Null);
-            return false;
-        }
-
-        try
-        {
-            JToken.Parse(body);
-            return true;
-        }
-        catch (Exception)
-        {
-            pipeman.DisplayError(nameof(body), Errors.Null);
-            return false;
-        }
-    }
-
-    private bool VariablesValidation(string json)
-    {
-        Dictionary<string, string> jsonData = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-
-        foreach (KeyValuePair<string, string> variable in jsonData)
-        {
-            if (!acceptedVariables.Contains(variable.Key, StringComparer.OrdinalIgnoreCase))
-            {
-                pipeman.DisplayError(variable.Key, Errors.WrongVariable);
-                return false;
-            }
-        }
-        return true;
     }
 
     private string GetPlayerVariable(PlayerVariables variable)

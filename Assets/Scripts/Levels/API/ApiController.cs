@@ -6,10 +6,12 @@ public class ApiController : MonoBehaviour
 {
     [SerializeField] private GameObject screenButtons;
     [SerializeField] private Pipeman pipeman;
+    private GameObject button;
 
     private GameObject playerObject;
 
     private PlayerEndpoints playerEndpoints;
+    private ButtonEndpoints buttonEndpoints;
     private QuestManager questManager;
 
     [HideInInspector] public List<IUserAction> actions = new List<IUserAction>();
@@ -34,11 +36,20 @@ public class ApiController : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("Re-Initializing", this);
-        
-        GameObject playerDecoy = GameObject.FindWithTag("Player Decoy");
+        SetPlayer();
+        SetButton();
+    }
 
-        if(playerDecoy != null)
+    private void SetButton()
+    {
+        button = GameObject.FindWithTag(ObjectsTags.Button.ToString());
+    }
+
+    private void SetPlayer()
+    {
+        GameObject playerDecoy = GameObject.FindWithTag(ObjectsTags.PlayerDecoy.ToString());
+
+        if (playerDecoy != null)
         {
             playerObject.transform.position = playerDecoy.transform.position;
             Destroy(playerDecoy);
@@ -49,6 +60,7 @@ public class ApiController : MonoBehaviour
     {
         playerEndpoints = GetComponent<PlayerEndpoints>();
         questManager = GetComponent<QuestManager>();
+        buttonEndpoints = GetComponent<ButtonEndpoints>();
     }
 
     public Pipeman GetPipeman()
@@ -66,6 +78,11 @@ public class ApiController : MonoBehaviour
         return playerEndpoints;
     }
 
+    public ButtonEndpoints GetButtonEndpoints()
+    {
+        return buttonEndpoints;
+    }
+
     public QuestManager GetQuestManager()
     {
         return questManager;
@@ -75,6 +92,12 @@ public class ApiController : MonoBehaviour
     {
         return playerObject;
     }
+
+    public GameObject GetButtonObject()
+    {
+        return button;
+    }
+
 
     public void SetPlayer(GameObject player)
     {

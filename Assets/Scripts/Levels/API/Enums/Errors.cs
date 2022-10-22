@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 public enum Errors
 {
     None,
@@ -8,7 +6,8 @@ public enum Errors
     NotInteger,
     ObjectExists,
     NotJson,
-    WrongVariable
+    WrongVariable,
+    WrongValue
 }
 
 public static class ErrorDescriptions
@@ -29,6 +28,8 @@ public static class ErrorDescriptions
                 return "is not valid";
             case Errors.WrongVariable:
                 return "does not exist";
+            case Errors.WrongValue:
+                return "has wrong value";
             default:
                 return "Unknown error";
         }

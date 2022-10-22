@@ -23,12 +23,14 @@ public class Pipeman : MonoBehaviour
     private GameObject[] tabs;
 
     private PlayerEndpoints playerEndpoints;
+    private ButtonEndpoints buttonEndpoints;
 
     private void Start()
     {
         apiController = ApiController.Instance;
         tabs = new GameObject[] { paramTab, authTab, bodyTab };
         playerEndpoints = apiController.GetPlayerEndpoints();
+        buttonEndpoints = apiController.GetButtonEndpoints();
     }
 
     public void ChangeResponse(string text)
@@ -56,6 +58,12 @@ public class Pipeman : MonoBehaviour
                 break;
             case EndpointConstants.postPlayer:
                 playerEndpoints.PostPlayer(body);
+                break;
+            case EndpointConstants.getButton:
+                buttonEndpoints.GetButton();
+                break;
+            case EndpointConstants.postButton:
+                buttonEndpoints.PostButton(body);
                 break;
 
             default:
