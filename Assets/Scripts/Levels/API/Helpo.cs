@@ -11,7 +11,6 @@ public class Helpo : MonoBehaviour
     [SerializeField] private GameObject nameObject;
     private TextMeshProUGUI messageText;
 
-    [SerializeField] private ApiController apiController;
     private QuestManager questManager;
 
     private int currentMessage = 0;
@@ -28,7 +27,7 @@ public class Helpo : MonoBehaviour
 
     private void Start()
     {
-        questManager = apiController.GetQuestManager();
+        questManager = ApiController.Instance.GetQuestManager();
         currentQuest = questManager.GetCurrentQuest();
         messageText = messageObject.GetComponent<TextMeshProUGUI>();
         playMessage = PlayMessage();

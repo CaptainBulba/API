@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class ScreenButtons : MonoBehaviour
+public class TopMenu : MonoBehaviour
 {
     [SerializeField] private GameObject apiController;
-    [SerializeField] private GameObject pipemanObject;
     [SerializeField] private GameObject questObject;
+    private GameObject pipemanObject;
+
+    private void Start()
+    {
+        apiController = ApiController.Instance.gameObject;
+        pipemanObject = ApiController.Instance.GetPipeman().gameObject;
+    }
 
     public void OpenPipeman()
     {

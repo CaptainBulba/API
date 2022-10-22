@@ -12,14 +12,14 @@ public class PlayerEndpoints : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
 
     private ApiController apiController;
-    private Pipeman pipemanController;
+    private Pipeman pipeman;
 
     private List<string> acceptedVariables = Enum.GetNames(typeof(PlayerVariables)).ToList();
 
     private void Start()
     {
         apiController = GetComponent<ApiController>();
-        pipemanController = apiController.GetPipeman();
+        pipeman = apiController.GetPipeman();
         string json = "{\"name\": \"Bob\", \"coordinateX\": \"3\", \"coordinateY\": \"1\"}";
         PutPlayer(json);
     }
@@ -28,7 +28,7 @@ public class PlayerEndpoints : MonoBehaviour
     {
         if (IsPlayerExists())
         {
-            pipemanController.ChangeResponse(ObjectToJson(player));
+            pipeman.ChangeResponse(ObjectToJson(player));
         }
     }
 
@@ -94,7 +94,7 @@ public class PlayerEndpoints : MonoBehaviour
             if (editObject)
             {
                 JsonConvert.PopulateObject(json, player);
-                pipemanController.ChangeResponse(ObjectToJson(player));
+                pipeman.ChangeResponse(ObjectToJson(player));
 
                 if (x != null || y != null)
                 {
@@ -134,7 +134,7 @@ public class PlayerEndpoints : MonoBehaviour
 
         if (error != Errors.None)
         {
-            pipemanController.DisplayError(nameof(name), error);
+            pipeman.DisplayError(nameof(name), error);
             return false;
         }
         else
@@ -154,7 +154,7 @@ public class PlayerEndpoints : MonoBehaviour
 
         if (error != Errors.None)
         {
-            pipemanController.DisplayError(nameof(coordinate), error);
+            pipeman.DisplayError(nameof(coordinate), error);
             return false;
         }
         else
@@ -165,7 +165,7 @@ public class PlayerEndpoints : MonoBehaviour
     {
         if (player != null)
         {
-            pipemanController.DisplayError(nameof(player), Errors.ObjectExists);
+            pipeman.DisplayError(nameof(player), Errors.ObjectExists);
             return true;
         }
         else
@@ -176,7 +176,7 @@ public class PlayerEndpoints : MonoBehaviour
     {
         if (string.IsNullOrWhiteSpace(body))
         {
-            pipemanController.DisplayError(nameof(body), Errors.Null);
+            pipeman.DisplayError(nameof(body), Errors.Null);
             return false;
         }
 
@@ -187,7 +187,7 @@ public class PlayerEndpoints : MonoBehaviour
         }
         catch (Exception)
         {
-            pipemanController.DisplayError(nameof(body), Errors.Null);
+            pipeman.DisplayError(nameof(body), Errors.Null);
             return false;
         }
     }
@@ -200,7 +200,7 @@ public class PlayerEndpoints : MonoBehaviour
         {
             if (!acceptedVariables.Contains(variable.Key, StringComparer.OrdinalIgnoreCase))
             {
-                pipemanController.DisplayError(variable.Key, Errors.WrongVariable);
+                pipeman.DisplayError(variable.Key, Errors.WrongVariable);
                 return false;
             }
         }

@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ApiController : MonoBehaviour
 {
-    [SerializeField] private Pipeman pipemanController;
     [SerializeField] private GameObject screenButtons;
+    [SerializeField] private Pipeman pipeman;
 
     private GameObject playerObject;
 
@@ -12,6 +13,37 @@ public class ApiController : MonoBehaviour
     private QuestManager questManager;
 
     [HideInInspector] public List<IUserAction> actions = new List<IUserAction>();
+
+    public static ApiController Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+            Destroy(gameObject);
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("Re-Initializing", this);
+        
+        GameObject playerDecoy = GameObject.FindWithTag("Player Decoy");
+
+        if(playerDecoy != null)
+        {
+            playerObject.transform.position = playerDecoy.transform.position;
+            Destroy(playerDecoy);
+        }
+    }
 
     private void Start()
     {
@@ -21,7 +53,7 @@ public class ApiController : MonoBehaviour
 
     public Pipeman GetPipeman()
     {
-        return pipemanController;
+        return pipeman;
     }
 
     public GameObject GetScreenButtons()

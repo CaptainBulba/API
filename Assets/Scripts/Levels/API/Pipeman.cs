@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Pipeman : MonoBehaviour
@@ -15,15 +16,17 @@ public class Pipeman : MonoBehaviour
     [SerializeField] private GameObject authTab;
     [SerializeField] private GameObject bodyTab;
 
-    [SerializeField] private GameObject screenButtons;
+    [SerializeField] private GameObject topMenu;
+
+    private ApiController apiController;
 
     private GameObject[] tabs;
 
-    [SerializeField] private ApiController apiController;
     private PlayerEndpoints playerEndpoints;
 
     private void Start()
     {
+        apiController = ApiController.Instance;
         tabs = new GameObject[] { paramTab, authTab, bodyTab };
         playerEndpoints = apiController.GetPlayerEndpoints();
     }
@@ -115,7 +118,7 @@ public class Pipeman : MonoBehaviour
     public void ClosePipeman()
     {
         gameObject.SetActive(false);
-        screenButtons.SetActive(true);
+        topMenu.SetActive(true);
 
         if(apiController.actions.Count != 0)
         {
