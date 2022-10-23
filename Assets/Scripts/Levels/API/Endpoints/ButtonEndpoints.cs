@@ -9,15 +9,20 @@ public class ButtonEndpoints : MonoBehaviour
     private ApiController apiController;
     private Pipeman pipeman;
     private ButtonConstructor button;
+    private GameObject buttonObject;
+    private string buttonName = "button";
     private EndpointsChecks endpointsChecks;
 
     private List<string> acceptedVariables = Enum.GetNames(typeof(ButtonVariables)).ToList();
+
+    private float maxDistance = 1f;
 
     private void Start()
     {
         apiController = ApiController.Instance;
         pipeman = apiController.GetPipeman();
-        SetButton(apiController.GetButtonObject());
+        buttonObject = apiController.GetButtonObject();
+        SetButton(buttonObject);
         endpointsChecks = GetComponent<EndpointsChecks>();
     }
 
@@ -66,14 +71,26 @@ public class ButtonEndpoints : MonoBehaviour
 
             if (editObject)
             {
-                JsonConvert.PopulateObject(json, button);
-                pipeman.ChangeResponse(ObjectToJson(button));
+                if(CheckDistance())
+                {
+                    JsonConvert.PopulateObject(json, button);
+                    pipeman.ChangeResponse(ObjectToJson(button));
 
-                // Add user action to change level 
-
-                //MovePlayer move = new MovePlayer(apiController.GetPlayer(), (float)int.Parse(x), (float)int.Parse(y));
-                //apiController.actions.Add(move);
+                    PressedButton pressedButton = new PressedButton(buttonObject);
+                    apiController.actions.Add(pressedButton);
+                }
             }
+        }
+    }
+
+    private bool CheckDistance()
+    {
+        if (Vector2.Distance(buttonObject.transform.position, apiController.GetPlayer().transform.position) <= maxDistance)
+            return true;
+        else
+        {
+            pipeman.DisplayError(buttonName, Errors.TooFar);
+            return false;
         }
     }
 

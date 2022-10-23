@@ -50,12 +50,6 @@ public class Player : MonoBehaviour
             GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
             nameText.color = new Color(0f, 0f, 0f, alphaValue);
         }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-            SceneManager.LoadScene(nextSceneIndex);
-        }
     }
 
     public void SetTargetPosition(float x, float y)

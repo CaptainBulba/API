@@ -7,7 +7,8 @@ public enum Errors
     ObjectExists,
     NotJson,
     WrongVariable,
-    WrongValue
+    WrongValue,
+    TooFar
 }
 
 public static class ErrorDescriptions
@@ -30,6 +31,8 @@ public static class ErrorDescriptions
                 return "does not exist";
             case Errors.WrongValue:
                 return "has wrong value";
+            case Errors.TooFar:
+                return "is too far";
             default:
                 return "Unknown error";
         }
