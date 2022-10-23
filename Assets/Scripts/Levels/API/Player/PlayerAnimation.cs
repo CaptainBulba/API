@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    private PlayerAnimations currentAnim;
     private Animator anim;
 
     private void Start()
@@ -15,6 +14,5 @@ public class PlayerAnimation : MonoBehaviour
     public void ChangeAnimation(PlayerAnimations animation)
     {
         anim.Play(animation.ToString());
-        currentAnim = animation;
     }
 }

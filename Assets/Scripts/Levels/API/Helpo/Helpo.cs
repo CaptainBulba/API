@@ -23,14 +23,18 @@ public class Helpo : MonoBehaviour
 
     private bool isShowingMessage = false;
 
-    private IEnumerator playMessage;
+    private Animator anim;
+    private SpriteRenderer spriteRen;
+
+    [SerializeField] private Sprite spriteOff;
 
     private void Start()
     {
         questManager = ApiController.Instance.GetQuestManager();
         currentQuest = questManager.GetCurrentQuest();
         messageText = messageObject.GetComponent<TextMeshProUGUI>();
-        playMessage = PlayMessage();
+        anim = GetComponent<Animator>();
+        spriteRen = GetComponent<SpriteRenderer>();
     }
 
     private void OnMouseOver()
@@ -57,8 +61,15 @@ public class Helpo : MonoBehaviour
             nameObject.SetActive(true);
             messageObject.SetActive(false);
             isShowingMessage = false;
+            anim.enabled = false;
+            spriteRen.sprite = spriteOff;
             yield break;
         }
+
+        if(anim.enabled == false)
+            anim.enabled = true;
+
+        anim.Play(HelpoAnimations.HelpoTalking.ToString());
 
         string text = (string)jsonData["text"][currentMessage]["message"];
 
@@ -75,6 +86,7 @@ public class Helpo : MonoBehaviour
             yield return new WaitForSeconds(typingTimer);
         }
 
+        anim.Play(HelpoAnimations.HelpoMessage.ToString());
         isShowingMessage = false;
     }
 }
