@@ -85,6 +85,7 @@ public class ButtonEndpoints : MonoBehaviour
 
     private bool CheckDistance()
     {
+
         if (Vector2.Distance(buttonObject.transform.position, apiController.GetPlayer().transform.position) <= maxDistance)
             return true;
         else

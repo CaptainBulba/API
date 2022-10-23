@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    private PlayerAnimation anim;
+    private SpriteRenderer sprite;
+
     private float speed = 2f;
     private Vector2 currentPos;
     private Vector2 targetPos;
@@ -31,14 +34,37 @@ public class Player : MonoBehaviour
     private void Start()
     {
         apiController = FindObjectOfType<ApiController>();
+        anim = GetComponent<PlayerAnimation>();
+        sprite = GetComponent<SpriteRenderer>();
        
         activatePlayer = true;
     }
 
     private void Update()
     {
-        if (Vector3.Distance(currentPos, targetPos) > 0.01f)
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * speed);
+        if (Vector3.Distance(transform.position, targetPos) > 0.01f)
+        {
+            Debug.Log(Vector3.Distance(transform.position, targetPos));
+
+            Vector2 dir = (new Vector2(transform.position.x, transform.position.y) - targetPos).normalized;
+
+            if (dir.x > 0f)
+            {
+                anim.ChangeAnimation(PlayerAnimations.PlayerWalking);
+                sprite.flipX = true;
+            }
+            else if (dir.x < 0f)
+            {
+                anim.ChangeAnimation(PlayerAnimations.PlayerWalking);
+                sprite.flipX = false;
+            }
+            else if(dir.y > 0f || dir.y < 0f)
+                anim.ChangeAnimation(PlayerAnimations.PlayerWalking);
+
+            transform.position = Vector2.MoveTowards(transform.position, targetPos, Time.deltaTime * speed);
+        }
+        else
+            anim.ChangeAnimation(PlayerAnimations.PlayerIdle);
 
 
         if (activatePlayer && currentTime <= activateTime)
@@ -58,7 +84,7 @@ public class Player : MonoBehaviour
         targetPos = new Vector2(x + extraCord, y + extraCord);
     }
 
-    public void ActivatePlayer(string name,int x, int y)
+    public void ActivatePlayer(string name, int x, int y)
     { 
         gameObject.SetActive(true);
     
@@ -67,7 +93,8 @@ public class Player : MonoBehaviour
 
         nameText.text = name;
         transform.position = new Vector2(x + extraCord, y + extraCord);
-       
+        targetPos = transform.position;
+
         activatePlayer = true;
     }
 
