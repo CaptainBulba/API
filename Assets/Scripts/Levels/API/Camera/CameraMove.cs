@@ -4,7 +4,7 @@ public class CameraMove : MonoBehaviour
 {
     private Vector3 oldPos;
     private Vector3 panOrigin;
-    private float panSpeed = 10;
+    [SerializeField] private float moveSpeed = 10;
 
     private void LateUpdate()
     {
@@ -18,7 +18,7 @@ public class CameraMove : MonoBehaviour
         {
             Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
             pos = pos - panOrigin;
-            transform.position = oldPos + -pos * panSpeed;
+            transform.position = oldPos + -pos * moveSpeed;
         }
     }
 }

@@ -8,7 +8,6 @@ using UnityEngine;
 public class Helpo : MonoBehaviour
 {
     [SerializeField] private GameObject messageObject;
-    [SerializeField] private GameObject nameObject;
     private TextMeshProUGUI messageText;
 
     private QuestManager questManager;
@@ -24,9 +23,8 @@ public class Helpo : MonoBehaviour
     private bool isShowingMessage = false;
 
     private Animator anim;
-    private SpriteRenderer spriteRen;
 
-    [SerializeField] private Sprite spriteOff;
+    private CameraZoom camZoom;
 
     private void Start()
     {
@@ -34,7 +32,10 @@ public class Helpo : MonoBehaviour
         currentQuest = questManager.GetCurrentQuest();
         messageText = messageObject.GetComponent<TextMeshProUGUI>();
         anim = GetComponent<Animator>();
-        spriteRen = GetComponent<SpriteRenderer>();
+        StartCoroutine(PlayMessage());
+
+        camZoom = Camera.main.GetComponent<CameraZoom>();
+
     }
 
     private void OnMouseOver()
@@ -42,7 +43,11 @@ public class Helpo : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             if (!isShowingMessage)
+            {
+                camZoom.ZoomToObject(gameObject);
                 StartCoroutine(PlayMessage());
+            }
+                
         }
     }
 
@@ -58,16 +63,12 @@ public class Helpo : MonoBehaviour
 
         if(jsonMessageLenght == currentMessage)
         {
-            nameObject.SetActive(true);
             messageObject.SetActive(false);
             isShowingMessage = false;
-            anim.enabled = false;
-            spriteRen.sprite = spriteOff;
+            camZoom.ReturnFromZoom();
             yield break;
         }
-
-        if(anim.enabled == false)
-            anim.enabled = true;
+            
 
         anim.Play(HelpoAnimations.HelpoTalking.ToString());
 
@@ -77,7 +78,6 @@ public class Helpo : MonoBehaviour
         messageText.text = null;
         currentMessage++;
 
-        nameObject.SetActive(false);
         messageObject.SetActive(true);
 
         foreach (char c in text)
@@ -86,7 +86,11 @@ public class Helpo : MonoBehaviour
             yield return new WaitForSeconds(typingTimer);
         }
 
-        anim.Play(HelpoAnimations.HelpoMessage.ToString());
+        if (jsonMessageLenght != currentMessage)
+            anim.Play(HelpoAnimations.HelpoMessage.ToString());
+        else
+            anim.Play(HelpoAnimations.HelpoOff.ToString());
+
         isShowingMessage = false;
     }
 }

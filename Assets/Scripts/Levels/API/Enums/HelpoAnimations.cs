@@ -1,5 +1,6 @@
 public enum HelpoAnimations
 {
     HelpoTalking,
-    HelpoMessage
+    HelpoMessage,
+    HelpoOff
 }
