@@ -30,7 +30,7 @@ public class Helpo : MonoBehaviour
     {
         questManager = ApiController.Instance.GetQuestManager();
         currentQuest = questManager.GetCurrentQuest();
-        messageText = messageObject.GetComponent<TextMeshProUGUI>();
+        messageText = messageObject.GetComponentInChildren<TextMeshProUGUI>();
         anim = GetComponent<Animator>();
         StartCoroutine(PlayMessage());
 

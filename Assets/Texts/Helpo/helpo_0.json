@@ -1,10 +1,16 @@
 {
     "text": [
         {
-            "message": "hello"
+            "message": "Click on me!"
         },
         {
-            "message": "hello2"
+            "message": "Hello"
+        },
+        {
+            "message": "Hello 2"
+        },
+        {
+            "message": "Hello 3"
         }
     ]
 }

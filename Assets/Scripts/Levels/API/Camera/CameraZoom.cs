@@ -61,6 +61,7 @@ public class CameraZoom : MonoBehaviour
     {
         if(currentState != ZoomStates.Zooming)
         {
+            previousPos = transform.position;
             previousZoom = cam.orthographicSize;
             zoomPos = obj.transform.position;
             currentState = ZoomStates.Zooming;
