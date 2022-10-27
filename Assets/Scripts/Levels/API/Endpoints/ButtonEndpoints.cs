@@ -15,7 +15,7 @@ public class ButtonEndpoints : MonoBehaviour
 
     private List<string> acceptedVariables = Enum.GetNames(typeof(ButtonVariables)).ToList();
 
-    private float maxDistance = 1f;
+    private float maxDistance = 0.1f;
 
     private void Start()
     {

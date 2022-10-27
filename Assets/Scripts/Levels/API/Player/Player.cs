@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer sprite;
 
     private float speed = 2f;
-    private Vector2 currentPos;
+    private Vector2 startPos;
     private Vector2 targetPos;
     private float extraCord = 0.5f; 
 
@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     private ApiController apiController;
     private Canvas canvas;
     private TextMeshProUGUI nameText;
+
+    private GridManager gridManager;
 
     // Timers
     private float currentTime = 0;
@@ -36,6 +38,8 @@ public class Player : MonoBehaviour
         apiController = FindObjectOfType<ApiController>();
         anim = GetComponent<PlayerAnimation>();
         sprite = GetComponent<SpriteRenderer>();
+
+        gridManager = FindObjectOfType<GridManager>();
        
         activatePlayer = true;
     }
@@ -44,8 +48,6 @@ public class Player : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, targetPos) > 0.01f)
         {
-            Debug.Log(Vector3.Distance(transform.position, targetPos));
-
             Vector2 dir = (new Vector2(transform.position.x, transform.position.y) - targetPos).normalized;
 
             if (dir.x > 0f)
@@ -80,7 +82,7 @@ public class Player : MonoBehaviour
 
     public void SetTargetPosition(float x, float y)
     {
-        currentPos = transform.position;
+        startPos = transform.position;
         targetPos = new Vector2(x + extraCord, y + extraCord);
     }
 
@@ -128,8 +130,10 @@ public class Player : MonoBehaviour
     {
         if(col.gameObject.CompareTag(wallTag))
         {
-            transform.position = currentPos;
-            targetPos = currentPos;
+            Vector2 newPosition = gridManager.GetClosestTile(gameObject);
+
+            transform.position = newPosition;
+            targetPos = newPosition;
         }
     }
 
@@ -137,5 +141,10 @@ public class Player : MonoBehaviour
     {
         canvas = GetComponentInChildren<Canvas>();
         nameText = canvas.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public Vector3 GetStartPosition()
+    {
+        return startPos;
     }
 }
