@@ -10,7 +10,6 @@ public class Pipeman : MonoBehaviour
     [SerializeField] private TMP_InputField bodyText;
     [SerializeField] private TMP_InputField endpointText;
     [SerializeField] private TMP_Dropdown endpointType;
-    [SerializeField] private ScrollRect scrollRect;
 
     [SerializeField] private GameObject paramTab;
     [SerializeField] private GameObject authTab;
@@ -36,7 +35,6 @@ public class Pipeman : MonoBehaviour
     public void ChangeResponse(string text)
     {
         responseText.text = text;
-        scrollRect.verticalNormalizedPosition = 1f;
     }
 
     public void SendButton()
