@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class ApiController : MonoBehaviour
 {
-    [SerializeField] private GameObject screenButtons;
+    [SerializeField] private GameObject topMenu;
     [SerializeField] private Pipeman pipeman;
     private GameObject button;
 
@@ -68,9 +68,9 @@ public class ApiController : MonoBehaviour
         return pipeman;
     }
 
-    public GameObject GetScreenButtons()
+    public GameObject GetTopMenuObject()
     {
-        return screenButtons;
+        return topMenu;
     }
 
     public PlayerEndpoints GetPlayerEndpoints()

@@ -18,13 +18,15 @@ public class Helpo : MonoBehaviour
     private JObject jsonData;
     private int jsonMessageLenght;
 
-    private float typingTimer = 0.1f;
+    private float typingTimer = 0.05f;
 
     private bool isShowingMessage = false;
 
     private Animator anim;
 
     private CameraZoom camZoom;
+
+    private TopMenu topMenu;
 
     private void Start()
     {
@@ -33,6 +35,7 @@ public class Helpo : MonoBehaviour
         anim = GetComponent<Animator>();
 
         questManager = ApiController.Instance.GetQuestManager();
+        topMenu = ApiController.Instance.GetTopMenuObject().GetComponent<TopMenu>();
 
         currentQuest = questManager.GetCurrentQuest();
 
@@ -61,6 +64,7 @@ public class Helpo : MonoBehaviour
             messageObject.SetActive(false);
             isShowingMessage = false;
             camZoom.ReturnFromZoom();
+            topMenu.OpenQuest();
             yield break;
         }
 

@@ -42,6 +42,6 @@ public class QuestManager : MonoBehaviour
     public void CloseQuest()
     {
         questObject.SetActive(false);
-        GetComponent<ApiController>().GetScreenButtons().SetActive(true);
+        GetComponent<ApiController>().GetTopMenuObject().SetActive(true);
     }
 }
