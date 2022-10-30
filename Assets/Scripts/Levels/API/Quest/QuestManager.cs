@@ -13,15 +13,16 @@ public class QuestManager : MonoBehaviour
     private int currentQuest = 0;
     private string currentQuestClean;
 
-    public enum QuestsNames
+    public enum QuestTitles
     {
-        LosingFocus
+        LosingFocus,
+        HelloWorld,
+        FindingButton
     }
 
     private void Start()
     {
         questChecks = GameObject.FindWithTag(ObjectsTags.QuestChecks.ToString());
-    //    DisplayQuest();
     }
 
     public void QuestCompleted()
@@ -47,8 +48,14 @@ public class QuestManager : MonoBehaviour
     {
         switch (currentQuestClean)
         {
-            case nameof(QuestsNames.LosingFocus):
+            case nameof(QuestTitles.LosingFocus):
                 questChecks.GetComponent<LosingFocus>().enabled = true;
+                break;
+            case nameof(QuestTitles.HelloWorld):
+                questChecks.GetComponent<HelloWorld>().enabled = true;
+                break;
+            case nameof(QuestTitles.FindingButton):
+                questChecks.GetComponent<FindingButton>().enabled = true;
                 break;
         }
     }

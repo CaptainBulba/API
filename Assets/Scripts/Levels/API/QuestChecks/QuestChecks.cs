@@ -2,17 +2,20 @@ using UnityEngine;
 
 public class QuestChecks : MonoBehaviour
 {
+    private ApiController apiController;
     private QuestManager questManager;
     private Helpo helpo;
 
     protected virtual void Start()
     {
-        questManager = FindObjectOfType<QuestManager>();
+        apiController = ApiController.Instance;
+        questManager = apiController.GetQuestManager();
         helpo = FindObjectOfType<Helpo>();
     }
 
     public void QuestCompleted()
     {
+        enabled = false;
         questManager.QuestCompleted();
         helpo.NewMessage();
     }
@@ -27,5 +30,8 @@ public class QuestChecks : MonoBehaviour
         return helpo;
     }
 
-
+    public ApiController GetApiController()
+    {
+        return apiController;
+    }
 }

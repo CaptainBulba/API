@@ -18,5 +18,6 @@ public class CreatePlayer : IUserAction
     public void Run()
     {
         player.GetComponent<Player>().ActivatePlayer(name, x, y);
+        ApiController.Instance.SetPlayer(player);
     }
 }

@@ -54,7 +54,6 @@ public class PlayerEndpoints : MonoBehaviour
                 
                 playerObject.SetActive(false);
                 playerObject.AddComponent<Player>();
-                apiController.SetPlayer(playerObject);
 
                 CreatePlayer create = new CreatePlayer(playerObject, name, int.Parse(x), int.Parse(y));
                 apiController.actions.Add(create);

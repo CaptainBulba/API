@@ -33,9 +33,6 @@ public class LosingFocus : QuestChecks
                 movedZoom = true;
 
         if (movedCamera && movedZoom)
-        {
             QuestCompleted();
-            GetComponent<LosingFocus>().enabled = false;
-        }
     }
 }
