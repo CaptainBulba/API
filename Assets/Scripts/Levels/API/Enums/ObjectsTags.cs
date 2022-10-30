@@ -1,5 +1,6 @@
 public enum ObjectsTags
 {
     PlayerDecoy,
-    Button
+    Button,
+    QuestChecks
 }

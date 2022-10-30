@@ -8,25 +8,22 @@ using UnityEngine;
 public class Helpo : MonoBehaviour
 {
     [SerializeField] private GameObject messageObject;
+    [SerializeField] private GameObject skipObject;
     private TextMeshProUGUI messageText;
 
     private QuestManager questManager;
+    private Animator anim;
+    private CameraZoom camZoom;
+    private TopMenu topMenu;
 
     private int currentMessage = 0;
-    private int currentQuest; 
+    private int currentQuest = 0; 
 
     private JObject jsonData;
     private int jsonMessageLenght;
 
     private float typingTimer = 0.05f;
-
     private bool isShowingMessage = false;
-
-    private Animator anim;
-
-    private CameraZoom camZoom;
-
-    private TopMenu topMenu;
 
     private void Start()
     {
@@ -41,34 +38,42 @@ public class Helpo : MonoBehaviour
 
         messageText = messageObject.GetComponentInChildren<TextMeshProUGUI>();
 
+        camZoom.ZoomToObject(gameObject);
         StartCoroutine(PlayMessage());
     }
 
     private void OnMouseOver()
     {
         if(Input.GetMouseButtonDown(0) && !isShowingMessage)
+        {
+            camZoom.ZoomToObject(gameObject);
             StartCoroutine(PlayMessage());
+        }
     }
 
-    private IEnumerator PlayMessage()
+    public void SkipMessages()
+    {
+        MessageFinished();
+        currentMessage = jsonMessageLenght;
+        anim.Play(HelpoAnimations.HelpoOff.ToString());
+    }
+
+    public IEnumerator PlayMessage()
     {
         if (currentQuest != questManager.GetCurrentQuest() || jsonData == null)
         {
             string filePath = "Assets/Texts/Helpo/helpo_" + questManager.GetCurrentQuest() + ".json";
             jsonData = JsonFunctions.LoadJson(filePath);
             jsonMessageLenght = JsonFunctions.CountArray(jsonData["text"]);
+            currentMessage = 0;
+            currentQuest = questManager.GetCurrentQuest();
         }
 
-        if(jsonMessageLenght == currentMessage)
+        if (jsonMessageLenght == currentMessage)
         {
-            messageObject.SetActive(false);
-            isShowingMessage = false;
-            camZoom.ReturnFromZoom();
-            topMenu.OpenQuest();
+            MessageFinished();
             yield break;
         }
-
-        camZoom.ZoomToObject(gameObject);
 
         anim.Play(HelpoAnimations.HelpoTalking.ToString());
 
@@ -78,7 +83,7 @@ public class Helpo : MonoBehaviour
         messageText.text = null;
         currentMessage++;
 
-        messageObject.SetActive(true);
+        ActivateMessage(true);
 
         foreach (char c in text)
         {
@@ -92,5 +97,24 @@ public class Helpo : MonoBehaviour
             anim.Play(HelpoAnimations.HelpoOff.ToString());
 
         isShowingMessage = false;
+    }
+
+    private void MessageFinished()
+    {
+        ActivateMessage(false);
+        isShowingMessage = false;
+        camZoom.ReturnFromZoom(true);
+        topMenu.OpenQuest();
+    }
+
+    public void NewMessage()
+    {
+        anim.Play(HelpoAnimations.HelpoMessage.ToString());
+    }
+
+    private void ActivateMessage(bool option)
+    {
+        messageObject.SetActive(option);
+        skipObject.SetActive(option);
     }
 }

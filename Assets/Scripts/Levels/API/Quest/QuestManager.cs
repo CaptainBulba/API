@@ -5,15 +5,23 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
+    private GameObject questChecks;
     [SerializeField] private GameObject questObject;
     [SerializeField] private TextMeshProUGUI questTitle;
     [SerializeField] private TextMeshProUGUI questDescription;
 
-    private int currentQuest = 0; 
+    private int currentQuest = 0;
+    private string currentQuestClean;
+
+    public enum QuestsNames
+    {
+        LosingFocus
+    }
 
     private void Start()
     {
-        DisplayQuest();   
+        questChecks = GameObject.FindWithTag(ObjectsTags.QuestChecks.ToString());
+    //    DisplayQuest();
     }
 
     public void QuestCompleted()
@@ -32,6 +40,17 @@ public class QuestManager : MonoBehaviour
 
         questTitle.text = (string)jsonData["title"];
         questDescription.text = (string)jsonData["description"];
+        currentQuestClean = (string)jsonData["titleClean"];
+    }
+
+    public void InitiateQuestChecks()
+    {
+        switch (currentQuestClean)
+        {
+            case nameof(QuestsNames.LosingFocus):
+                questChecks.GetComponent<LosingFocus>().enabled = true;
+                break;
+        }
     }
 
     public int GetCurrentQuest()
