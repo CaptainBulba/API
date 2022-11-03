@@ -1,21 +1,17 @@
-{
-    "text": [
-        {
-            "message": "Good job! You figured out the camera controlls!"
-        },
-        {
-            "message": "Now it is time to create yourself by using your first endpoint"
-        },
-        {
-            "message": "Do not worry, it is nothing complicated"
-        },
-        {
-            "message": "Click on the Pipeman on top of your screen select PUT type and write 'Player' in the endpoint name"
-        },
-        {
-            "message": "In the body, specify your name, x and y coordinates"
-        }
-    ]
-}
-
-
+[
+    {
+        "message": "Good job! You figured out the camera controlls!"
+    },
+    {
+        "message": "Before we start doing some magic you need add your own personal API token to Pipeman"
+    },
+    {
+        "message": "Before I tell you what it is, keep in mind that you should never share you token with anyone!"
+    },
+    {
+        "message": "This token gives access to everything!"
+    },
+    {
+        "message": "And your special token is {0}"
+    }
+]

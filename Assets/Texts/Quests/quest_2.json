@@ -1,5 +1,5 @@
 {
-    "title": "Finding Button",
-    "titleClean": "FindingButton",
-    "description": "Use POST Player endpoint to update X and Y values of the player. \nYou can find button's coordinates by hovering with your mouse"
+    "title": "Hello World",
+    "titleClean": "HelloWorld",
+    "description": "Now you need to create yourself. Go to Postman at top of your screen\nSelect PUT type\nWrite Player in the endpoint nama\nin the body include x to be -6\ny should be -4\n and finally don't forget to include what is your name"
 }

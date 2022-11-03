@@ -1,0 +1,5 @@
+{
+    "title": "Finding Button",
+    "titleClean": "FindingButton",
+    "description": "Use POST Player endpoint to update X and Y values of the player. \nYou can find button's coordinates by hovering with your mouse"
+}

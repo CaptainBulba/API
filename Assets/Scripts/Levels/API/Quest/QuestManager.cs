@@ -13,13 +13,6 @@ public class QuestManager : MonoBehaviour
     private int currentQuest = 0;
     private string currentQuestClean;
 
-    public enum QuestTitles
-    {
-        LosingFocus,
-        HelloWorld,
-        FindingButton
-    }
-
     private void Start()
     {
         questChecks = GameObject.FindWithTag(ObjectsTags.QuestChecks.ToString());
@@ -57,7 +50,15 @@ public class QuestManager : MonoBehaviour
             case nameof(QuestTitles.FindingButton):
                 questChecks.GetComponent<FindingButton>().enabled = true;
                 break;
+            case nameof(QuestTitles.TopSecret):
+                questChecks.GetComponent<TopSecret>().enabled = true;
+                break;
         }
+    }
+
+    public QuestTitles GetQuestTitle()
+    {
+        return (QuestTitles)System.Enum.Parse(typeof(QuestTitles), currentQuestClean);
     }
 
     public int GetCurrentQuest()

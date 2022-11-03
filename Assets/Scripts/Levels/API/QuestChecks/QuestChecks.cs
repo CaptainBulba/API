@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class QuestChecks : MonoBehaviour
 {
-    private ApiController apiController;
-    private QuestManager questManager;
+    public ApiController apiController;
+    public QuestManager questManager;
     private Helpo helpo;
 
     protected virtual void Start()
@@ -15,9 +15,9 @@ public class QuestChecks : MonoBehaviour
 
     public void QuestCompleted()
     {
-        enabled = false;
         questManager.QuestCompleted();
         helpo.NewMessage();
+        enabled = false;
     }
 
     public QuestManager GetQuestManager()

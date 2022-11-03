@@ -15,6 +15,8 @@ public class Pipeman : MonoBehaviour
     [SerializeField] private GameObject authTab;
     [SerializeField] private GameObject bodyTab;
 
+    [SerializeField] private TMP_InputField tokenInput;
+
     [SerializeField] private GameObject topMenu;
 
     private ApiController apiController;
@@ -134,5 +136,10 @@ public class Pipeman : MonoBehaviour
             }
             apiController.actions.Clear();
         }
+    }
+
+    public string GetTokenInput()
+    {
+        return tokenInput.text;
     }
 }

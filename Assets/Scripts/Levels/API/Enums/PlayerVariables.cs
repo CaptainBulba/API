@@ -1,6 +1,6 @@
 public enum PlayerVariables
 {
     Name, 
-    CoordinateX,
-    CoordinateY
+    X,
+    Y
 }

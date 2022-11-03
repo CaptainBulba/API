@@ -1,0 +1,20 @@
+[
+    {
+        "message": "Woooow! Come down champion"
+    },
+    {
+        "message": "I think you noticed that there a nice button"
+    },
+    {
+        "message": "You need to press it in order to go to the next stage of our experiment"
+    },
+    {
+        "message": "You need to it, to do that you need to use again Player endpoint, but this time PUT type to update x and y values"
+    },
+    {
+        "message": "Keep in mind that you cannot go through walls. You're not a super hero!"
+    },
+    {
+        "message": "Good Luck!"
+    }
+]

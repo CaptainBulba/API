@@ -1,5 +1,5 @@
 {
-    "title": "Hello World",
-    "titleClean": "HelloWorld",
+    "title": "Top Secret",
+    "titleClean": "TopSecret",
     "description": "Now you need to create yourself. Go to Postman at top of your screen\nSelect PUT type\nWrite Player in the endpoint nama\nin the body include x to be -6\ny should be -4\n and finally don't forget to include what is your name"
 }

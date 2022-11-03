@@ -1,7 +1,9 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -11,19 +13,28 @@ public class Helpo : MonoBehaviour
     [SerializeField] private GameObject skipObject;
     private TextMeshProUGUI messageText;
 
+    private ApiController apiController;
     private QuestManager questManager;
     private Animator anim;
     private CameraZoom camZoom;
     private TopMenu topMenu;
 
     private int currentMessage = 0;
-    private int currentQuest = 0; 
+    private int currentQuest = 0;
 
-    private JObject jsonData;
+    private List<HelpoJson> jsonData;
     private int jsonMessageLenght;
 
     private float typingTimer = 0.05f;
     private bool isShowingMessage = false;
+
+
+    [Serializable]
+    public class HelpoJson
+    {
+        public string message { get; set; }
+    }
+
 
     private void Start()
     {
@@ -31,8 +42,9 @@ public class Helpo : MonoBehaviour
 
         anim = GetComponent<Animator>();
 
-        questManager = ApiController.Instance.GetQuestManager();
-        topMenu = ApiController.Instance.GetTopMenuObject().GetComponent<TopMenu>();
+        apiController = ApiController.Instance;
+        questManager = apiController.GetQuestManager();
+        topMenu = apiController.GetTopMenuObject().GetComponent<TopMenu>();
 
         currentQuest = questManager.GetCurrentQuest();
 
@@ -63,8 +75,14 @@ public class Helpo : MonoBehaviour
         if (currentQuest != questManager.GetCurrentQuest() || jsonData == null)
         {
             string filePath = "Assets/Texts/Helpo/helpo_" + questManager.GetCurrentQuest() + ".json";
-            jsonData = JsonFunctions.LoadJson(filePath);
-            jsonMessageLenght = JsonFunctions.CountArray(jsonData["text"]);
+            
+            StreamReader r = new StreamReader(filePath);
+            string json = r.ReadToEnd();
+
+            jsonData = JsonConvert.DeserializeObject<List<HelpoJson>>(json);
+
+            jsonMessageLenght = jsonData.Count;
+            
             currentMessage = 0;
             currentQuest = questManager.GetCurrentQuest();
         }
@@ -77,7 +95,10 @@ public class Helpo : MonoBehaviour
 
         anim.Play(HelpoAnimations.HelpoTalking.ToString());
 
-        string text = (string)jsonData["text"][currentMessage]["message"];
+        string text = jsonData[currentMessage].message;
+
+        if (text.HasPlaceholder())
+            text = string.Format(text, PlaceholderText());
 
         isShowingMessage = true;
         messageText.text = null;
@@ -97,6 +118,15 @@ public class Helpo : MonoBehaviour
             anim.Play(HelpoAnimations.HelpoOff.ToString());
 
         isShowingMessage = false;
+    }
+
+    private string PlaceholderText()
+    {
+        if(questManager.GetQuestTitle() == QuestTitles.TopSecret)
+            return apiController.GetToken();
+
+        else 
+            return null;
     }
 
     private void MessageFinished()

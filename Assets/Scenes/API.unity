@@ -1987,7 +1987,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 780923487}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.42871168
+  m_Size: 0.42871174
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5769,6 +5769,7 @@ GameObject:
   - component: {fileID: 650595467}
   - component: {fileID: 650595470}
   - component: {fileID: 650595471}
+  - component: {fileID: 650595472}
   m_Layer: 0
   m_Name: QuestChecks
   m_TagString: QuestChecks
@@ -5788,6 +5789,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2a73ec1763d43249a4da907ebe62581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  apiController: {fileID: 0}
+  questManager: {fileID: 0}
 --- !u!4 &650595468
 Transform:
   m_ObjectHideFlags: 0
@@ -5809,11 +5812,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 650595466}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0081fd82e0add6a45b242c2b8734d52f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  apiController: {fileID: 0}
+  questManager: {fileID: 0}
 --- !u!114 &650595470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5826,6 +5831,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3764bc60b43aa742b4ba15f5d067a32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  apiController: {fileID: 0}
+  questManager: {fileID: 0}
 --- !u!114 &650595471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5838,6 +5845,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9829010228c200b4982bc68a1d8dd583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  apiController: {fileID: 0}
+  questManager: {fileID: 0}
+--- !u!114 &650595472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650595466}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c04119d3bdef2049998517550ea9bd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiController: {fileID: 0}
+  questManager: {fileID: 0}
 --- !u!1 &752665290
 GameObject:
   m_ObjectHideFlags: 0
@@ -7447,6 +7470,7 @@ MonoBehaviour:
   paramTab: {fileID: 1292384602}
   authTab: {fileID: 149234660}
   bodyTab: {fileID: 1726992329}
+  tokenInput: {fileID: 1458495865}
   topMenu: {fileID: 1978140980}
 --- !u!1 &1077250862
 GameObject:

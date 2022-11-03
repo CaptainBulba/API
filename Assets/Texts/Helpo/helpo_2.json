@@ -1,24 +1,17 @@
-{
-    "text": [
-        {
-            "message": "Woooow! Come down champion"
-        },
-        {
-            "message": "I think you noticed that there a nice button"
-        },
-        {
-            "message": "You need to press it in order to go to the next stage of our experiment"
-        },
-        {
-            "message": "You need to it, to do that you need to use again Player endpoint, but this time PUT type to update x and y values"
-        },
-        {
-            "message": "Keep in mind that you cannot go through walls. You're not a super hero!"
-        },
-        {
-            "message": "Good Luck!"
-        }
-    ]
-}
-
-
+[
+    {
+        "message": "Well done!"
+    },
+    {
+        "message": "Now it is time to create yourself by using your first endpoint"
+    },
+    {
+        "message": "Do not worry, it is nothing complicated"
+    },
+    {
+        "message": "Click on the Pipeman on top of your screen select PUT type and write 'Player' in the endpoint name"
+    },
+    {
+        "message": "In the body, specify your name, x and y coordinates"
+    }
+]

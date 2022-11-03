@@ -24,7 +24,7 @@ public class PlayerEndpoints : MonoBehaviour
         pipeman = apiController.GetPipeman();
         endpointsChecks = GetComponent<EndpointsChecks>();
 
-        string json = "{\"name\": \"Bob\", \"coordinateX\": \"3\", \"coordinateY\": \"1\"}";
+        string json = "{\"name\": \"Bob\", \"x\": \"3\", \"y\": \"1\"}";
         PutPlayer(json);
     }
 
@@ -43,8 +43,8 @@ public class PlayerEndpoints : MonoBehaviour
             PlayerConstructor jsonData = JsonConvert.DeserializeObject<PlayerConstructor>(json);
 
             string name = jsonData.name;
-            string x = jsonData.coordinateX;
-            string y = jsonData.coordinateY;
+            string x = jsonData.x;
+            string y = jsonData.y;
 
             if (CheckName(name) && CheckCord(x) && CheckCord(y))
             {
@@ -80,13 +80,13 @@ public class PlayerEndpoints : MonoBehaviour
                     if (!CheckName(variable.Value))
                         editObject = false;
                 }
-                if (variable.Key.ToLower() == GetPlayerVariable(PlayerVariables.CoordinateX))
+                if (variable.Key.ToLower() == GetPlayerVariable(PlayerVariables.X))
                 {
                     x = variable.Value;
                     if (!CheckCord(x))
                         editObject = false;
                 }
-                if (variable.Key.ToLower() == GetPlayerVariable(PlayerVariables.CoordinateY))
+                if (variable.Key.ToLower() == GetPlayerVariable(PlayerVariables.Y))
                 {
                     y = variable.Value;
                     if (!CheckCord(y))
@@ -102,10 +102,10 @@ public class PlayerEndpoints : MonoBehaviour
                 if (x != null || y != null)
                 {
                     if (x == null)
-                        x = player.coordinateX;
+                        x = player.x;
 
                     if (y == null)
-                        y = player.coordinateY;
+                        y = player.y;
 
                     MovePlayer move = new MovePlayer(apiController.GetPlayer(), (float)int.Parse(x), (float)int.Parse(y));
                     apiController.actions.Add(move);

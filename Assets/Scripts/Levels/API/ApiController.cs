@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class ApiController : MonoBehaviour
 {
+    private string apiToken = "topsecret";
+
     [SerializeField] private GameObject topMenu;
     [SerializeField] private Pipeman pipeman;
     private GameObject button;
@@ -97,11 +99,14 @@ public class ApiController : MonoBehaviour
     {
         return button;
     }
-
-
     public void SetPlayer(GameObject player)
     {
         if (playerObject == null)
             playerObject = player;
+    }
+
+    public string GetToken()
+    {
+        return apiToken;
     }
 }
