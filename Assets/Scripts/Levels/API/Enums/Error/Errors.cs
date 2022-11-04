@@ -8,7 +8,8 @@ public enum Errors
     NotJson,
     WrongVariable,
     WrongValue,
-    TooFar
+    TooFar,
+    WrongToken
 }
 
 public static class ErrorDescriptions
@@ -33,6 +34,8 @@ public static class ErrorDescriptions
                 return "has wrong value";
             case Errors.TooFar:
                 return "is too far";
+            case Errors.WrongToken:
+                return "is wrong";
             default:
                 return "Unknown error";
         }

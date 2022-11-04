@@ -16,11 +16,22 @@ public class EndpointsChecks : MonoBehaviour
         pipeman = apiController.GetPipeman();
     }
 
+    public bool IsValidToken()
+    {
+        if (pipeman.GetTokenInput() != apiController.GetToken())
+        {
+            pipeman.DisplayError(ErrorVariables.Token.ToString(), Errors.WrongToken);
+            return false;
+        }
+        else
+            return true;
+    }
+
     public bool IsValidJson(string body)
     {
         if (string.IsNullOrWhiteSpace(body))
         {
-            pipeman.DisplayError(nameof(body), Errors.Null);
+            pipeman.DisplayError(ErrorVariables.Body.ToString(), Errors.Null);
             return false;
         }
 
@@ -31,7 +42,7 @@ public class EndpointsChecks : MonoBehaviour
         }
         catch (Exception)
         {
-            pipeman.DisplayError(nameof(body), Errors.Null);
+            pipeman.DisplayError(ErrorVariables.Body.ToString(), Errors.Null);
             return false;
         }
     }

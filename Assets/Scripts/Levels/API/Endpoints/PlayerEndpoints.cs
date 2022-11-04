@@ -24,13 +24,13 @@ public class PlayerEndpoints : MonoBehaviour
         pipeman = apiController.GetPipeman();
         endpointsChecks = GetComponent<EndpointsChecks>();
 
-        string json = "{\"name\": \"Bob\", \"x\": \"3\", \"y\": \"1\"}";
-        PutPlayer(json);
+        //string json = "{\"name\": \"Bob\", \"x\": \"3\", \"y\": \"1\"}";
+        //PutPlayer(json);
     }
 
     public void GetPlayer()
     {
-        if (IsPlayerExists())
+        if (IsPlayerExists() && endpointsChecks.IsValidToken())
         {
             pipeman.ChangeResponse(ObjectToJson(player));
         }
@@ -38,7 +38,7 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void PutPlayer(string json)
     {
-        if (endpointsChecks.IsValidJson(json) && !IsPlayerExists())
+        if (endpointsChecks.IsValidJson(json) && !IsPlayerExists() && endpointsChecks.IsValidToken())
         {
             PlayerConstructor jsonData = JsonConvert.DeserializeObject<PlayerConstructor>(json);
 
@@ -63,7 +63,7 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void PostPlayer(string json)
     {
-        if (endpointsChecks.IsValidJson(json) && IsPlayerExists() && endpointsChecks.VariablesValidation(json, acceptedVariables))
+        if (endpointsChecks.IsValidJson(json) && IsPlayerExists() && endpointsChecks.VariablesValidation(json, acceptedVariables) && endpointsChecks.IsValidToken())
         {
             bool editObject = true;
             string name = null;
@@ -137,7 +137,7 @@ public class PlayerEndpoints : MonoBehaviour
 
         if (error != Errors.None)
         {
-            pipeman.DisplayError(nameof(name), error);
+            pipeman.DisplayError(ErrorVariables.Name.ToString(), error);
             return false;
         }
         else
@@ -157,7 +157,7 @@ public class PlayerEndpoints : MonoBehaviour
 
         if (error != Errors.None)
         {
-            pipeman.DisplayError(nameof(coordinate), error);
+            pipeman.DisplayError(ErrorVariables.Coordinates.ToString(), error);
             return false;
         }
         else
@@ -168,7 +168,7 @@ public class PlayerEndpoints : MonoBehaviour
     {
         if (player != null)
         {
-            pipeman.DisplayError(nameof(player), Errors.ObjectExists);
+            pipeman.DisplayError(ErrorVariables.Player.ToString(), Errors.ObjectExists);
             return true;
         }
         else
