@@ -69,6 +69,6 @@ public class GridManager : MonoBehaviour
         Vector3Int position = grid.WorldToCell(worldPoint);
 
         if (ground.HasTile(position) || walls.HasTile(position))
-            displayCoords.ChangeCoords("Coordinates: " + position.x + ", " + position.y);
+            displayCoords.ChangeCoords(position.x + ", " + position.y);
     }
 }
