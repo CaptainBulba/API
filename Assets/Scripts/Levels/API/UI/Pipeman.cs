@@ -142,4 +142,9 @@ public class Pipeman : MonoBehaviour
     {
         return tokenInput.text;
     }
+
+    public void SetTokeInput(string token)
+    {
+        tokenInput.text = token;
+    }
 }

@@ -34,10 +34,9 @@ public class GridManager : MonoBehaviour
         {
             Vector3Int localPlace = new Vector3Int(pos.x, pos.y, pos.z);
             Vector2 place = ground.CellToWorld(localPlace);
+
             if (ground.HasTile(localPlace) && !walls.HasTile(localPlace))
-            {
                 tilesPosition.Add(place);
-            }
         }
     }
 
@@ -69,6 +68,6 @@ public class GridManager : MonoBehaviour
         Vector3Int position = grid.WorldToCell(worldPoint);
 
         if (ground.HasTile(position) || walls.HasTile(position))
-            displayCoords.ChangeCoords(position.x + ", " + position.y);
+            displayCoords.ChangeCoords("x: " + position.x + ", " + "y: " + position.y);
     }
 }

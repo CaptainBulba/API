@@ -23,8 +23,10 @@ public class PlayerEndpoints : MonoBehaviour
         pipeman = apiController.GetPipeman();
         endpointsChecks = GetComponent<EndpointsChecks>();
 
-        //string json = "{\"name\": \"Bob\", \"x\": \"3\", \"y\": \"1\"}";
-        //PutPlayer(json);
+        //For testing
+        pipeman.SetTokeInput(apiController.GetToken());
+        string json = "{\"name\": \"Bob\", \"x\": \"3\", \"y\": \"1\"}";
+        PutPlayer(json);
     }
 
     public void GetPlayer()
@@ -37,6 +39,7 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void PutPlayer(string json)
     {
+        Debug.Log(endpointsChecks.IsValidToken());
         if (endpointsChecks.IsValidJson(json) && !IsPlayerExists() && endpointsChecks.IsValidToken())
         {
             PlayerConstructor jsonData = JsonConvert.DeserializeObject<PlayerConstructor>(json);
