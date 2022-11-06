@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class HelloWorld : QuestChecks
 {
     private void Update()

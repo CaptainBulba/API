@@ -39,7 +39,6 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void PutPlayer(string json)
     {
-        Debug.Log(endpointsChecks.IsValidToken());
         if (endpointsChecks.IsValidJson(json) && !IsPlayerExists() && endpointsChecks.IsValidToken())
         {
             PlayerConstructor jsonData = JsonConvert.DeserializeObject<PlayerConstructor>(json);

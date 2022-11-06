@@ -37,9 +37,17 @@ public class QuestManager : MonoBehaviour
     public void LoadQuest()
     {
         string filePath = "Assets/Texts/Quests/quest_" + currentQuest + ".json";
+        string json;
 
-        StreamReader r = new StreamReader(filePath);
-        string json = r.ReadToEnd();
+        try
+        {
+            StreamReader r = new StreamReader(filePath);
+            json = r.ReadToEnd();
+        }
+        catch (Exception)
+        {
+            return;
+        }
 
         var jsonData = JsonConvert.DeserializeObject<QuestJson>(json);
 

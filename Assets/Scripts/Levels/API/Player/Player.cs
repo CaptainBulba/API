@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
 
     private bool activatePlayer;
     
-    private ApiController apiController;
     private Canvas canvas;
     private TextMeshProUGUI nameText;
 
@@ -35,7 +34,6 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        apiController = FindObjectOfType<ApiController>();
         anim = GetComponent<PlayerAnimation>();
         sprite = GetComponent<SpriteRenderer>();
 
@@ -46,7 +44,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (Vector3.Distance(transform.position, targetPos) > 0.01f)
+        if (new Vector2(transform.position.x, transform.position.y) != targetPos)
         {
             Vector2 dir = (new Vector2(transform.position.x, transform.position.y) - targetPos).normalized;
 
@@ -73,7 +71,7 @@ public class Player : MonoBehaviour
         {
             currentTime += Time.deltaTime;
 
-            float alphaValue = Mathf.Lerp(0f, 1f, currentTime / activateTime);
+            float alphaValue = Mathf.MoveTowards(0f, 1f, currentTime / activateTime);
 
             GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
             nameText.color = new Color(0f, 0f, 0f, alphaValue);

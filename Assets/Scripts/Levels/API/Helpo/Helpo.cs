@@ -121,10 +121,8 @@ public class Helpo : MonoBehaviour
 
     private string PlaceholderText()
     {
-        Debug.Log(questManager.GetQuestTitle());
         if(questManager.GetQuestTitle() == QuestTitles.TopSecret)
             return apiController.GetToken();
-
         else 
             return null;
     }
