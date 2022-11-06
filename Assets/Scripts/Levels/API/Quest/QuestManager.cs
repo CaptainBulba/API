@@ -1,4 +1,6 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -13,28 +15,38 @@ public class QuestManager : MonoBehaviour
     private int currentQuest = 0;
     private string currentQuestClean;
 
+    public class QuestJson
+    {
+        public string title { get; set; }
+        public string titleClean { get; set; }
+        public string description { get; set; }
+    }
+
     private void Start()
     {
         questChecks = GameObject.FindWithTag(ObjectsTags.QuestChecks.ToString());
+        LoadQuest();
     }
 
     public void QuestCompleted()
     {
         currentQuest++;
+        LoadQuest();
     }
 
-    public void DisplayQuest()
+    public void LoadQuest()
     {
         string filePath = "Assets/Texts/Quests/quest_" + currentQuest + ".json";
 
-        StreamReader reader = new StreamReader(filePath);
-        string json = reader.ReadToEnd();
+        StreamReader r = new StreamReader(filePath);
+        string json = r.ReadToEnd();
 
-        var jsonData = JObject.Parse(json);
+        var jsonData = JsonConvert.DeserializeObject<QuestJson>(json);
 
-        questTitle.text = (string)jsonData["title"];
-        questDescription.text = (string)jsonData["description"];
-        currentQuestClean = (string)jsonData["titleClean"];
+        currentQuestClean = jsonData.titleClean;
+
+        questTitle.text = jsonData.title;
+        questDescription.text = jsonData.description;
     }
 
     public void InitiateQuestChecks()
