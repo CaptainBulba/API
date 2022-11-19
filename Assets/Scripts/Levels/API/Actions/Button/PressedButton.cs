@@ -11,6 +11,6 @@ public class PressedButton : IUserAction
 
     public void Run()
     {
-        button.GetComponent<LoadNextScene>().NextScene();
+        button.GetComponent<Button>().CoroutinePressButton();
     }
 }

@@ -25,7 +25,7 @@ public class PlayerEndpoints : MonoBehaviour
 
         //For testing
         pipeman.SetTokeInput(apiController.GetToken());
-        string json = "{\"name\": \"Bob\", \"x\": \"3\", \"y\": \"1\"}";
+        string json = "{\"name\": \"Bob\", \"x\": \"-5\", \"y\": \"0\"}";
         PutPlayer(json);
     }
 

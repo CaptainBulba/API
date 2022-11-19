@@ -27,6 +27,15 @@ public class Player : MonoBehaviour
 
     private string wallTag = "Wall";
 
+    private PlayerStates currentState;
+
+    private enum PlayerStates
+    {
+        Idle, 
+        Walking,
+        Jumping
+    }
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -44,29 +53,35 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (new Vector2(transform.position.x, transform.position.y) != targetPos)
+        if(currentState != PlayerStates.Jumping)
         {
-            Vector2 dir = (new Vector2(transform.position.x, transform.position.y) - targetPos).normalized;
-
-            if (dir.x > 0f)
+            if (new Vector2(transform.position.x, transform.position.y) != targetPos)
             {
-                anim.ChangeAnimation(PlayerAnimations.PlayerWalking);
-                sprite.flipX = true;
-            }
-            else if (dir.x < 0f)
-            {
-                anim.ChangeAnimation(PlayerAnimations.PlayerWalking);
-                sprite.flipX = false;
-            }
-            else if(dir.y > 0f || dir.y < 0f)
-                anim.ChangeAnimation(PlayerAnimations.PlayerWalking);
+                Vector2 dir = (new Vector2(transform.position.x, transform.position.y) - targetPos).normalized;
 
-            transform.position = Vector2.MoveTowards(transform.position, targetPos, Time.deltaTime * speed);
+                if (dir.x > 0f)
+                {
+                    anim.ChangeAnimation(PlayerAnimations.PlayerWalking);
+                    sprite.flipX = true;
+                }
+                else if (dir.x < 0f)
+                {
+                    anim.ChangeAnimation(PlayerAnimations.PlayerWalking);
+                    sprite.flipX = false;
+                }
+                else if (dir.y > 0f || dir.y < 0f)
+                    anim.ChangeAnimation(PlayerAnimations.PlayerWalking);
+
+                transform.position = Vector2.MoveTowards(transform.position, targetPos, Time.deltaTime * speed);
+                currentState = PlayerStates.Walking;
+            }
+            else
+            {
+                anim.ChangeAnimation(PlayerAnimations.PlayerIdle);
+                currentState = PlayerStates.Idle;
+            }
         }
-        else
-            anim.ChangeAnimation(PlayerAnimations.PlayerIdle);
-
-
+        
         if (activatePlayer && currentTime <= activateTime)
         {
             currentTime += Time.deltaTime;
@@ -144,5 +159,25 @@ public class Player : MonoBehaviour
     public Vector3 GetStartPosition()
     {
         return startPos;
+    }
+
+    public void Jump()
+    {
+        anim.PlayAnimationOnce(PlayerAnimations.PlayerJump);
+        currentState = PlayerStates.Jumping;
+    }
+
+    public void SetIdleState()
+    {
+        currentState = PlayerStates.Idle;
+    }
+
+    void OnMouseDown()
+    {
+        if (Input.GetKey("mouse 0"))
+        {
+            PressedButton pressedButton = new PressedButton(ApiController.Instance.GetButtonObject());
+            pressedButton.Run();
+        }
     }
 }

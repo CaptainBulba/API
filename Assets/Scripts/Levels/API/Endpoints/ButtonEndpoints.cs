@@ -52,7 +52,7 @@ public class ButtonEndpoints : MonoBehaviour
 
     public void PostButton(string json)
     {
-        if (endpointsChecks.IsValidJson(json) && IsButtonExists() &&  endpointsChecks.VariablesValidation(json, acceptedVariables))
+        if (endpointsChecks.IsValidJson(json) && IsButtonExists() && endpointsChecks.VariablesValidation(json, acceptedVariables) && CheckDistance())
         {
             bool editObject = true;
             string pressed;
@@ -71,14 +71,11 @@ public class ButtonEndpoints : MonoBehaviour
 
             if (editObject)
             {
-                if(CheckDistance())
-                {
-                    JsonConvert.PopulateObject(json, button);
-                    pipeman.ChangeResponse(ObjectToJson(button));
+                JsonConvert.PopulateObject(json, button);
+                pipeman.ChangeResponse(ObjectToJson(button));
 
-                    PressedButton pressedButton = new PressedButton(buttonObject);
-                    apiController.actions.Add(pressedButton);
-                }
+                PressedButton pressedButton = new PressedButton(buttonObject);
+                apiController.actions.Add(pressedButton);
             }
         }
     }
@@ -101,7 +98,7 @@ public class ButtonEndpoints : MonoBehaviour
 
         if (string.IsNullOrWhiteSpace(pressed))
             error = Errors.Null;
-        
+
         else if (!bool.TryParse(pressed, out bool result))
             error = Errors.WrongValue;
 

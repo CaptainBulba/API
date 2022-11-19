@@ -15,4 +15,22 @@ public class PlayerAnimation : MonoBehaviour
     {
         anim.Play(animation.ToString());
     }
+
+    public void PlayAnimationOnce(PlayerAnimations animation)
+    {
+        anim.Play(animation.ToString(), 0, 0.0f);
+    }
+
+
+    public float AnimatorIsPlaying()
+    {
+        return anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
+    }
+
+
+    public bool AnimatorIsPlaying1()
+    {
+        return anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1;
+    }
+
 }
