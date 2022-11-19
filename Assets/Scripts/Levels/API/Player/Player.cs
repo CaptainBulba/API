@@ -172,6 +172,13 @@ public class Player : MonoBehaviour
         currentState = PlayerStates.Idle;
     }
 
+    public void DecoySwitch(GameObject playerDecoy)
+    {
+        transform.position = playerDecoy.transform.position;
+        targetPos = transform.position;
+    }
+    
+    // Testing
     void OnMouseDown()
     {
         if (Input.GetKey("mouse 0"))

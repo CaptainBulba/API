@@ -53,7 +53,7 @@ public class ApiController : MonoBehaviour
 
         if (playerDecoy != null)
         {
-            playerObject.transform.position = playerDecoy.transform.position;
+            playerObject.GetComponent<Player>().DecoySwitch(playerDecoy);
             Destroy(playerDecoy);
         }
     }
