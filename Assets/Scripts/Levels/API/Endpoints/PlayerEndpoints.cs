@@ -31,7 +31,7 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void GetPlayer()
     {
-        if (IsPlayerExists() && endpointsChecks.IsValidToken())
+        if (IsPlayerExists() && endpointsChecks.IsValidToken() && endpointsChecks.CheckPermission(EndpointsPermissions.getPlayer))
         {
             pipeman.ChangeResponse(ObjectToJson(player));
         }
@@ -39,7 +39,7 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void PutPlayer(string json)
     {
-        if (endpointsChecks.IsValidJson(json) && !IsPlayerExists() && endpointsChecks.IsValidToken())
+        if (endpointsChecks.IsValidJson(json) && !IsPlayerExists() && endpointsChecks.IsValidToken() && endpointsChecks.CheckPermission(EndpointsPermissions.putPlayer))
         {
             PlayerConstructor jsonData = JsonConvert.DeserializeObject<PlayerConstructor>(json);
 
@@ -64,7 +64,8 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void PostPlayer(string json)
     {
-        if (endpointsChecks.IsValidJson(json) && IsPlayerExists() && endpointsChecks.VariablesValidation(json, acceptedVariables) && endpointsChecks.IsValidToken())
+        if (endpointsChecks.IsValidJson(json) && IsPlayerExists() && endpointsChecks.VariablesValidation(json, acceptedVariables) 
+            && endpointsChecks.IsValidToken() && endpointsChecks.CheckPermission(EndpointsPermissions.postPlayer))
         {
             bool editObject = true;
             string name = null;

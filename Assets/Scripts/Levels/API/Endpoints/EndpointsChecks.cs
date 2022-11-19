@@ -66,4 +66,15 @@ public class EndpointsChecks : MonoBehaviour
         }
         return true;
     }
+
+    public bool CheckPermission(bool endpoint)
+    {
+        if (endpoint == false)
+        {
+            pipeman.DisplayError("permission", Errors.WrongVariable);
+            return false;
+        }
+        else
+            return true;
+    }
 }

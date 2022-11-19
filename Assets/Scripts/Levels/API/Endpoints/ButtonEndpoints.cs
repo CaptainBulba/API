@@ -28,7 +28,7 @@ public class ButtonEndpoints : MonoBehaviour
 
     public void GetButton()
     {
-        if (IsButtonExists())
+        if (IsButtonExists() && endpointsChecks.CheckPermission(EndpointsPermissions.getButton))
         {
             pipeman.ChangeResponse(ObjectToJson(button));
         }
@@ -52,7 +52,9 @@ public class ButtonEndpoints : MonoBehaviour
 
     public void PostButton(string json)
     {
-        if (endpointsChecks.IsValidJson(json) && IsButtonExists() && endpointsChecks.VariablesValidation(json, acceptedVariables) && CheckDistance())
+        if (endpointsChecks.IsValidJson(json) && IsButtonExists() 
+            && endpointsChecks.VariablesValidation(json, acceptedVariables) 
+            && CheckDistance() && endpointsChecks.CheckPermission(EndpointsPermissions.postButton))
         {
             bool editObject = true;
             string pressed;
