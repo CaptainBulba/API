@@ -8,17 +8,20 @@ public class CameraMove : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (Input.GetMouseButtonDown(1))
+        if(ApiController.Instance.GetUser().currentState == User.States.Playing)
         {
-            oldPos = transform.position;
-            panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        }
+            if (Input.GetMouseButtonDown(1))
+            {
+                oldPos = transform.position;
+                panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            }
 
-        if (Input.GetMouseButton(1))
-        {
-            Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-            pos = pos - panOrigin;
-            transform.position = oldPos + -pos * moveSpeed;
+            if (Input.GetMouseButton(1))
+            {
+                Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+                pos = pos - panOrigin;
+                transform.position = oldPos + -pos * moveSpeed;
+            }
         }
     }
 }

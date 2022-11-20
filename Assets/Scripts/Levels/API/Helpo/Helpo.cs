@@ -49,17 +49,13 @@ public class Helpo : MonoBehaviour
 
         messageText = messageObject.GetComponentInChildren<TextMeshProUGUI>();
 
-        camZoom.ZoomToObject(gameObject);
-        StartCoroutine(PlayMessage());
+        InitiateMessage();
     }
 
     private void OnMouseOver()
     {
         if(Input.GetMouseButtonDown(0) && !isShowingMessage)
-        {
-            camZoom.ZoomToObject(gameObject);
-            StartCoroutine(PlayMessage());
-        }
+            InitiateMessage();
     }
 
     public void SkipMessages()
@@ -67,6 +63,13 @@ public class Helpo : MonoBehaviour
         MessageFinished();
         currentMessage = jsonMessageLenght;
         anim.Play(HelpoAnimations.HelpoOff.ToString());
+    }
+
+    public void InitiateMessage()
+    {
+        apiController.GetUser().currentState = User.States.Helpo;
+        camZoom.ZoomToObject(gameObject);
+        StartCoroutine(PlayMessage());
     }
 
     public IEnumerator PlayMessage()

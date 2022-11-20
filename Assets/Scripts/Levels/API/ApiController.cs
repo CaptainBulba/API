@@ -15,6 +15,7 @@ public class ApiController : MonoBehaviour
     private PlayerEndpoints playerEndpoints;
     private ButtonEndpoints buttonEndpoints;
     private QuestManager questManager;
+    private User user;
 
     [HideInInspector] public List<IUserAction> actions = new List<IUserAction>();
 
@@ -42,6 +43,15 @@ public class ApiController : MonoBehaviour
         SetButton();
     }
 
+    private void Start()
+    {
+        playerEndpoints = GetComponent<PlayerEndpoints>();
+        questManager = GetComponent<QuestManager>();
+        buttonEndpoints = GetComponent<ButtonEndpoints>();
+        user = GetComponent<User>();
+        user.currentState = User.States.Playing;
+    }
+
     private void SetButton()
     {
         button = GameObject.FindWithTag(ObjectsTags.Button.ToString());
@@ -58,11 +68,9 @@ public class ApiController : MonoBehaviour
         }
     }
 
-    private void Start()
+    public User GetUser()
     {
-        playerEndpoints = GetComponent<PlayerEndpoints>();
-        questManager = GetComponent<QuestManager>();
-        buttonEndpoints = GetComponent<ButtonEndpoints>();
+        return user;
     }
 
     public Pipeman GetPipeman()

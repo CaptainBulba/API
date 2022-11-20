@@ -3,6 +3,7 @@ using UnityEngine;
 public class CameraZoom : MonoBehaviour
 {
     private Camera cam;
+    private ApiController apiController;
 
     private float targetZoom;
     private float zoomFactor = 3f;
@@ -31,6 +32,7 @@ public class CameraZoom : MonoBehaviour
     {
         cam = Camera.main;
         targetZoom = cam.orthographicSize;
+        apiController = ApiController.Instance;
     }
 
     private void Update()
@@ -50,13 +52,13 @@ public class CameraZoom : MonoBehaviour
                     currentState = ZoomStates.None;
                     if (initiateQuest)
                     {
-                        ApiController.Instance.GetQuestManager().InitiateQuestChecks();
-                        Debug.Log("Starting");
+                        apiController.GetQuestManager().InitiateQuestChecks();
+                        apiController.GetUser().currentState = User.States.Playing;
                     }
                 }
             }
         }
-        else
+        else if(apiController.GetUser().currentState == User.States.Playing)
         {
             float scrollData = Input.GetAxis("Mouse ScrollWheel");
             targetZoom -= scrollData * zoomFactor;
