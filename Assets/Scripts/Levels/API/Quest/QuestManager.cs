@@ -61,8 +61,8 @@ public class QuestManager : MonoBehaviour
     {
         if (Enum.IsDefined(typeof(QuestTitles), currentQuestClean))
         {
-            QuestChecks quest = (QuestChecks)Activator.CreateInstance(Type.GetType(currentQuestClean));
-            quest.StartQuest();
+            QuestChecks quest = questChecks.GetComponent(currentQuestClean) as QuestChecks;
+            quest.enabled = true;
         }
     }
 

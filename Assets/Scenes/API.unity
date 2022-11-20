@@ -5845,11 +5845,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 650595468}
+  - component: {fileID: 650595471}
+  - component: {fileID: 650595470}
   - component: {fileID: 650595469}
   - component: {fileID: 650595467}
-  - component: {fileID: 650595470}
-  - component: {fileID: 650595471}
-  - component: {fileID: 650595472}
   m_Layer: 0
   m_Name: QuestChecks
   m_TagString: QuestChecks
@@ -5866,7 +5865,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 650595466}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2a73ec1763d43249a4da907ebe62581, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c04119d3bdef2049998517550ea9bd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   apiController: {fileID: 0}
@@ -5894,7 +5893,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 650595466}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0081fd82e0add6a45b242c2b8734d52f, type: 3}
+  m_Script: {fileID: 11500000, guid: e2a73ec1763d43249a4da907ebe62581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   apiController: {fileID: 0}
@@ -5923,20 +5922,6 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9829010228c200b4982bc68a1d8dd583, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  apiController: {fileID: 0}
-  questManager: {fileID: 0}
---- !u!114 &650595472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650595466}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c04119d3bdef2049998517550ea9bd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   apiController: {fileID: 0}
@@ -14844,7 +14829,6 @@ GameObject:
   - component: {fileID: 1930561808}
   - component: {fileID: 1930561807}
   - component: {fileID: 1930561806}
-  - component: {fileID: 1930561805}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -14852,18 +14836,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1930561805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1930561804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65df776a045a23d4a861a6c47030f7c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1930561806
 MonoBehaviour:
   m_ObjectHideFlags: 0

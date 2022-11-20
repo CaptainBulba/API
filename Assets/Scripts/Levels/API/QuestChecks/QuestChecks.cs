@@ -2,11 +2,9 @@ using UnityEngine;
 
 public class QuestChecks : MonoBehaviour
 {
-    public ApiController apiController;
-    public QuestManager questManager;
+    private ApiController apiController;
+    private QuestManager questManager;
     private Helpo helpo;
-
-    public virtual void StartQuest() { }
 
     protected virtual void Start()
     {
