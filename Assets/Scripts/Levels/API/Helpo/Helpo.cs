@@ -1,9 +1,6 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using TMPro;
 using UnityEngine;
 
@@ -22,18 +19,11 @@ public class Helpo : MonoBehaviour
     private int currentMessage = 0;
     private int currentQuest = 0;
 
-    private List<HelpooJson> helpoLines;
+    private List<HelpoJson> helpoLines;
     private int jsonMessageLenght;
 
     private float typingTimer = 0.05f;
     private bool isShowingMessage = false;
-
-
-    [Serializable]
-    public class HelpoJson
-    {
-        public string message { get; set; }
-    }
 
     private void Start()
     {

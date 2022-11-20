@@ -6,10 +6,10 @@ public class QuestJson
     public string titleClean { get; set; }
     public string description { get; set; }
 
-    public List<HelpooJson> helpo { get; set; }
+    public List<HelpoJson> helpo { get; set; }
 }
 
-public class HelpooJson
+public class HelpoJson
 {
     public string message { get; set; }
 }

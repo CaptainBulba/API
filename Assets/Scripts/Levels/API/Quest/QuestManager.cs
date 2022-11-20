@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +14,7 @@ public class QuestManager : MonoBehaviour
 
     private int currentQuest = 0;
     private string currentQuestClean;
-    private List<HelpooJson> helpoLines; 
+    private List<HelpoJson> helpoLines; 
 
     private void Start()
     {
@@ -46,7 +45,6 @@ public class QuestManager : MonoBehaviour
         }
 
         var jsonData = JsonConvert.DeserializeObject<QuestJson>(json);
-
 
         currentQuestClean = jsonData.titleClean;
         helpoLines = jsonData.helpo;
@@ -85,7 +83,7 @@ public class QuestManager : MonoBehaviour
         InitiateQuestChecks();
     }
 
-    public List<HelpooJson> GetHelpoLines()
+    public List<HelpoJson> GetHelpoLines()
     {
         return helpoLines;
     }
