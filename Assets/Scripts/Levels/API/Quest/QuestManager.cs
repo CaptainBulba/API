@@ -60,8 +60,11 @@ public class QuestManager : MonoBehaviour
         if (Enum.IsDefined(typeof(QuestTitles), currentQuestClean))
         {
             QuestChecks quest = questChecks.GetComponent(currentQuestClean) as QuestChecks;
-            quest.enabled = true;
-            Debug.Log("Starting Quest: " + currentQuestClean);
+            if(quest.enabled == false)
+            {
+                quest.enabled = true;
+                Debug.Log("Starting Quest: " + currentQuestClean);
+            }
         }
     }
 
@@ -79,6 +82,7 @@ public class QuestManager : MonoBehaviour
     {
         questObject.SetActive(false);
         GetComponent<ApiController>().GetTopMenuObject().SetActive(true);
+        InitiateQuestChecks();
     }
 
     public List<HelpooJson> GetHelpoLines()

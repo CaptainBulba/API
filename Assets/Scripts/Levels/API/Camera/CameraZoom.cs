@@ -19,8 +19,6 @@ public class CameraZoom : MonoBehaviour
 
     private ZoomStates currentState;
 
-    private bool initiateQuest = false;
-
     private enum ZoomStates
     {
         None,
@@ -50,11 +48,7 @@ public class CameraZoom : MonoBehaviour
                 if (cam.orthographicSize == targetZoom && transform.position == new Vector3(previousPos.x, previousPos.y, cam.transform.position.z))
                 {
                     currentState = ZoomStates.None;
-                    if (initiateQuest)
-                    {
-                        apiController.GetQuestManager().InitiateQuestChecks();
-                        apiController.GetUser().currentState = User.States.Playing;
-                    }
+                    apiController.GetUser().currentState = User.States.Playing;
                 }
             }
         }
@@ -78,9 +72,8 @@ public class CameraZoom : MonoBehaviour
         }
     }
 
-    public void ReturnFromZoom(bool initQuest)
+    public void ReturnFromZoom()
     {
-        initiateQuest = initQuest;
         zoomPos = previousPos;
         currentState = ZoomStates.Returning;
     }

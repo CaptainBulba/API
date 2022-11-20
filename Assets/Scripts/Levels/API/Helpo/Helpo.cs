@@ -129,7 +129,7 @@ public class Helpo : MonoBehaviour
     {
         ActivateMessage(false);
         isShowingMessage = false;
-        camZoom.ReturnFromZoom(true);
+        camZoom.ReturnFromZoom();
         topMenu.OpenQuest();
     }
 
