@@ -15,6 +15,12 @@ public class LosingFocus : QuestChecks
         SetCameraVariables();
     }
 
+    public override void StartQuest()
+    {
+        //enabled = true;
+        Debug.Log("Yeah");
+    }
+
     private void SetCameraVariables()
     {
         cam = Camera.main;

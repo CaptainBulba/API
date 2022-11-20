@@ -59,26 +59,16 @@ public class QuestManager : MonoBehaviour
 
     public void InitiateQuestChecks()
     {
-        switch (currentQuestClean)
+        if (Enum.IsDefined(typeof(QuestTitles), currentQuestClean))
         {
-            case nameof(QuestTitles.LosingFocus):
-                questChecks.GetComponent<LosingFocus>().enabled = true;
-                break;
-            case nameof(QuestTitles.HelloWorld):
-                questChecks.GetComponent<HelloWorld>().enabled = true;
-                break;
-            case nameof(QuestTitles.FindingButton):
-                questChecks.GetComponent<FindingButton>().enabled = true;
-                break;
-            case nameof(QuestTitles.TopSecret):
-                questChecks.GetComponent<TopSecret>().enabled = true;
-                break;
+            QuestChecks quest = (QuestChecks)Activator.CreateInstance(Type.GetType(currentQuestClean));
+            quest.StartQuest();
         }
     }
 
     public QuestTitles GetQuestTitle()
     {
-        return (QuestTitles)System.Enum.Parse(typeof(QuestTitles), currentQuestClean);
+        return (QuestTitles)Enum.Parse(typeof(QuestTitles), currentQuestClean);
     }
 
     public int GetCurrentQuest()

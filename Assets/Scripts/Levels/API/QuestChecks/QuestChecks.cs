@@ -6,6 +6,8 @@ public class QuestChecks : MonoBehaviour
     public QuestManager questManager;
     private Helpo helpo;
 
+    public virtual void StartQuest() { }
+
     protected virtual void Start()
     {
         apiController = ApiController.Instance;

@@ -25,8 +25,6 @@ public class Player : MonoBehaviour
     private float activateTime = 1.5f;
     private float typingTimer = 0.125f;
 
-    private string wallTag = "Wall";
-
     private PlayerStates currentState;
 
     private enum PlayerStates
@@ -141,7 +139,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.CompareTag(wallTag))
+        if(col.gameObject.CompareTag(ObjectsTags.Wall.ToString()))
         {
             Vector2 newPosition = gridManager.GetClosestTile(gameObject);
 
