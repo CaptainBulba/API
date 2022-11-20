@@ -22,7 +22,7 @@ public class Helpo : MonoBehaviour
     private int currentMessage = 0;
     private int currentQuest = 0;
 
-    private List<HelpoJson> jsonData;
+    private List<HelpooJson> helpoLines;
     private int jsonMessageLenght;
 
     private float typingTimer = 0.05f;
@@ -71,17 +71,12 @@ public class Helpo : MonoBehaviour
 
     public IEnumerator PlayMessage()
     {
-        if (currentQuest != questManager.GetCurrentQuest() || jsonData == null)
+        if (currentQuest != questManager.GetCurrentQuest() || helpoLines == null)
         {
-            string filePath = "Assets/Texts/Helpo/helpo_" + questManager.GetCurrentQuest() + ".json";
-            
-            StreamReader r = new StreamReader(filePath);
-            string json = r.ReadToEnd();
+            helpoLines = questManager.GetHelpoLines();
 
-            jsonData = JsonConvert.DeserializeObject<List<HelpoJson>>(json);
+            jsonMessageLenght = helpoLines.Count;
 
-            jsonMessageLenght = jsonData.Count;
-            
             currentMessage = 0;
             currentQuest = questManager.GetCurrentQuest();
         }
@@ -94,7 +89,7 @@ public class Helpo : MonoBehaviour
 
         anim.Play(HelpoAnimations.HelpoTalking.ToString());
 
-        string text = jsonData[currentMessage].message;
+        string text = helpoLines[currentMessage].message;
 
         if (text.HasPlaceholder())
             text = string.Format(text, PlaceholderText());

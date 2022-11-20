@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -14,13 +15,7 @@ public class QuestManager : MonoBehaviour
 
     private int currentQuest = 0;
     private string currentQuestClean;
-
-    public class QuestJson
-    {
-        public string title { get; set; }
-        public string titleClean { get; set; }
-        public string description { get; set; }
-    }
+    private List<HelpooJson> helpoLines; 
 
     private void Start()
     {
@@ -46,12 +41,15 @@ public class QuestManager : MonoBehaviour
         }
         catch (Exception)
         {
+            // TODO: Logic if quest not found
             return;
         }
 
         var jsonData = JsonConvert.DeserializeObject<QuestJson>(json);
 
+
         currentQuestClean = jsonData.titleClean;
+        helpoLines = jsonData.helpo;
 
         questTitle.text = jsonData.title;
         questDescription.text = jsonData.description;
@@ -63,6 +61,7 @@ public class QuestManager : MonoBehaviour
         {
             QuestChecks quest = questChecks.GetComponent(currentQuestClean) as QuestChecks;
             quest.enabled = true;
+            Debug.Log("Starting Quest: " + currentQuestClean);
         }
     }
 
@@ -80,5 +79,10 @@ public class QuestManager : MonoBehaviour
     {
         questObject.SetActive(false);
         GetComponent<ApiController>().GetTopMenuObject().SetActive(true);
+    }
+
+    public List<HelpooJson> GetHelpoLines()
+    {
+        return helpoLines;
     }
 }

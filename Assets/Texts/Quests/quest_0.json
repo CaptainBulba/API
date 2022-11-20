@@ -1,5 +1,28 @@
 {
     "title": "I kept losing focus",
     "titleClean": "LosingFocus",
-    "description": "Hold right mouse button to move your camera\nMouse wheel to zoom in or zoom out camera"
+    "description": "Hold right mouse button to move your camera\nMouse wheel to zoom in or zoom out camera",
+    "helpo": [
+        {
+            "message": "Welcome! My name is Helpo, I am your personal assistant. Click on me to learn more!"
+        },
+        {
+            "message": "You have been selected for our experiment 11010001-10011110"
+        },
+        {
+            "message": "Before we start, when you see an exclamation on my screen it means that I have something to tell you"
+        },
+        {
+            "message": "Soooo... this experiment intends to teach you how to operate a controllable robot by using API"
+        },
+        {
+            "message": "The rules are quiet simple, you do what I tell you and we go home in no time"
+        },
+        {
+            "message": "Well, I just go to sleep mode, but at least I am resting!"
+        },
+        {
+            "message": "Your first task is to understand what are the controlls"
+        }
+    ]
 }

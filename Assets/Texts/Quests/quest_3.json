@@ -1,5 +1,22 @@
 {
     "title": "Finding Button",
     "titleClean": "FindingButton",
-    "description": "Use POST Player endpoint to update X and Y values of the player. \nYou can find button's coordinates by hovering with your mouse"
+    "description": "Use POST Player endpoint to update X and Y values of the player. \nYou can find button's coordinates by hovering with your mouse",
+    "helpo": [
+        {
+            "message": "Well done!"
+        },
+        {
+            "message": "Now it is time to create yourself by using your first endpoint"
+        },
+        {
+            "message": "Do not worry, it is nothing complicated"
+        },
+        {
+            "message": "Click on the Pipeman on top of your screen select PUT type and write 'Player' in the endpoint name"
+        },
+        {
+            "message": "In the body, specify your name, x and y coordinates"
+        }
+    ]
 }

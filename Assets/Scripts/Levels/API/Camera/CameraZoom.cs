@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class CameraZoom : MonoBehaviour
@@ -50,7 +49,10 @@ public class CameraZoom : MonoBehaviour
                 {
                     currentState = ZoomStates.None;
                     if (initiateQuest)
+                    {
                         ApiController.Instance.GetQuestManager().InitiateQuestChecks();
+                        Debug.Log("Starting");
+                    }
                 }
             }
         }

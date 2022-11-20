@@ -1,5 +1,22 @@
 {
     "title": "Hello World",
     "titleClean": "HelloWorld",
-    "description": "Now you need to create yourself. Go to Postman at top of your screen\nSelect PUT type\nWrite Player in the endpoint nama\nin the body include x to be -6\ny should be -4\n and finally don't forget to include what is your name"
+    "description": "Now you need to create yourself. Go to Postman at top of your screen\nSelect PUT type\nWrite Player in the endpoint nama\nin the body include x to be -6\ny should be -4\n and finally don't forget to include what is your name",
+    "helpo": [
+        {
+            "message": "Well done!"
+        },
+        {
+            "message": "Now it is time to create yourself by using your first endpoint"
+        },
+        {
+            "message": "Do not worry, it is nothing complicated"
+        },
+        {
+            "message": "Click on the Pipeman on top of your screen select PUT type and write 'Player' in the endpoint name"
+        },
+        {
+            "message": "In the body, specify your name, x and y coordinates"
+        }
+    ]
 }
