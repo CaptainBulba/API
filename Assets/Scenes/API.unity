@@ -5868,8 +5868,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c04119d3bdef2049998517550ea9bd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apiController: {fileID: 0}
-  questManager: {fileID: 0}
 --- !u!4 &650595468
 Transform:
   m_ObjectHideFlags: 0
@@ -5896,8 +5894,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2a73ec1763d43249a4da907ebe62581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apiController: {fileID: 0}
-  questManager: {fileID: 0}
 --- !u!114 &650595470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5910,8 +5906,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3764bc60b43aa742b4ba15f5d067a32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apiController: {fileID: 0}
-  questManager: {fileID: 0}
 --- !u!114 &650595471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5924,8 +5918,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9829010228c200b4982bc68a1d8dd583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apiController: {fileID: 0}
-  questManager: {fileID: 0}
 --- !u!1 &752665290
 GameObject:
   m_ObjectHideFlags: 0
@@ -15409,6 +15401,7 @@ GameObject:
   - component: {fileID: 2029313231}
   - component: {fileID: 2029313232}
   - component: {fileID: 2029313233}
+  - component: {fileID: 2029313234}
   m_Layer: 0
   m_Name: API Controller
   m_TagString: Untagged
@@ -15496,6 +15489,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d413d708bc8c748875e4cde28fcab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2029313234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2029313227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62a9507d0e7144149a2c821081628d3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
 --- !u!1 &2043996285
 GameObject:
   m_ObjectHideFlags: 0
