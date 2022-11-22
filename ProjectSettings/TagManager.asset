@@ -9,6 +9,7 @@ TagManager:
   - PlayerDecoy
   - Button
   - QuestChecks
+  - Box
   layers:
   - Default
   - TransparentFX

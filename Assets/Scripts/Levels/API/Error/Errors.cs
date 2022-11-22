@@ -9,7 +9,8 @@ public enum Errors
     WrongVariable,
     WrongValue,
     TooFar,
-    WrongToken
+    WrongToken,
+    Boolean
 }
 
 public static class ErrorDescriptions
@@ -36,6 +37,8 @@ public static class ErrorDescriptions
                 return "is too far";
             case Errors.WrongToken:
                 return "is wrong";
+            case Errors.Boolean:
+                return "is not boolean";
             default:
                 return "Unknown error";
         }

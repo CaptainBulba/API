@@ -149,12 +149,11 @@ public class PlayerEndpoints : MonoBehaviour
     private bool CheckCord(string coordinate)
     {
         Errors error = Errors.None;
-        int integerCord;
 
         if (string.IsNullOrWhiteSpace(coordinate))
             error = Errors.Null;
 
-        else if (!int.TryParse(coordinate, out integerCord))
+        else if (!int.TryParse(coordinate, out _))
             error = Errors.NotInteger;
 
         if (error != Errors.None)

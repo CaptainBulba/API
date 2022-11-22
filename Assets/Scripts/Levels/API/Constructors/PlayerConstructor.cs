@@ -7,13 +7,12 @@ public class PlayerConstructor
     public string name;
     public string x;
     public string y;
-    public bool activeFlag;
+    public bool activeFlag = true;
 
     public PlayerConstructor(string name, string x, string y)
     {
         this.name = name;
         this.x = x;
         this.y = y;
-        activeFlag = true;
     }
 }
