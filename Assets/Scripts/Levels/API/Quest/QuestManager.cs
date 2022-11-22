@@ -14,7 +14,7 @@ public class QuestManager : MonoBehaviour
 
     private int currentQuest = 0;
     private string currentQuestClean;
-    private List<HelpoJson> helpoLines; 
+    private List<HelpoJson> helpoLines;
 
     private void Start()
     {
@@ -55,15 +55,13 @@ public class QuestManager : MonoBehaviour
 
     public void InitiateQuestChecks()
     {
-        if (Enum.IsDefined(typeof(QuestTitles), currentQuestClean))
+        QuestChecks quest = questChecks.GetComponent(currentQuestClean) as QuestChecks;
+        if (quest != null && quest.enabled == false)
         {
-            QuestChecks quest = questChecks.GetComponent(currentQuestClean) as QuestChecks;
-            if(quest.enabled == false)
-            {
-                quest.enabled = true;
-                Debug.Log("Starting Quest: " + currentQuestClean);
-            }
+            quest.enabled = true;
+            Debug.Log("Starting Quest: " + currentQuestClean);
         }
+
     }
 
     public QuestTitles GetQuestTitle()
