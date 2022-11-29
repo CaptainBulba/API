@@ -6,11 +6,12 @@ public enum Errors
     NotInteger,
     ObjectExists,
     NotJson,
-    WrongVariable,
     WrongValue,
     TooFar,
     WrongToken,
-    Boolean
+    Boolean,
+    ObjectNotExists,
+    NoPermission
 }
 
 public static class ErrorDescriptions
@@ -29,8 +30,6 @@ public static class ErrorDescriptions
                 return "already exists";
             case Errors.NotJson:
                 return "is not valid";
-            case Errors.WrongVariable:
-                return "does not exist";
             case Errors.WrongValue:
                 return "has wrong value";
             case Errors.TooFar:
@@ -39,6 +38,10 @@ public static class ErrorDescriptions
                 return "is wrong";
             case Errors.Boolean:
                 return "is not boolean";
+            case Errors.ObjectNotExists:
+                return "does not exists";
+            case Errors.NoPermission:
+                return "You do not have a permission";
             default:
                 return "Unknown error";
         }

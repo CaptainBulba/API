@@ -4,31 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ButtonEndpoints : MonoBehaviour
+public class ButtonEndpoints : Endpoints
 {
-    private ApiController apiController;
-    private Pipeman pipeman;
     private ButtonConstructor button;
     private GameObject buttonObject;
     private string buttonName = "button";
-    private EndpointsChecks endpointsChecks;
 
     private List<string> acceptedVariables = Enum.GetNames(typeof(ButtonVariables)).ToList();
 
     private float maxDistance = 0.1f;
 
-    private void Start()
+    protected override void Start()
     {
-        apiController = ApiController.Instance;
-        pipeman = apiController.GetPipeman();
+        base.Start();
         buttonObject = apiController.GetButtonObject();
         SetButton(buttonObject);
-        endpointsChecks = GetComponent<EndpointsChecks>();
     }
 
     public void GetButton()
     {
-        if (IsButtonExists() && endpointsChecks.CheckPermission(EndpointsPermissions.getButton))
+        if (IsButtonExists() && CheckPermission(EndpointsPermissions.getButton))
         {
             pipeman.ChangeResponse(ObjectToJson(button));
         }
@@ -52,9 +47,9 @@ public class ButtonEndpoints : MonoBehaviour
 
     public void PostButton(string json)
     {
-        if (endpointsChecks.IsValidJson(json) && IsButtonExists() 
-            && endpointsChecks.VariablesValidation(json, acceptedVariables) 
-            && CheckDistance() && endpointsChecks.CheckPermission(EndpointsPermissions.postButton))
+        if (IsValidJson(json) && IsButtonExists() 
+            && VariablesValidation(json, acceptedVariables) 
+            && CheckDistance() && CheckPermission(EndpointsPermissions.postButton))
         {
             bool editObject = true;
             string pressed;
@@ -63,7 +58,7 @@ public class ButtonEndpoints : MonoBehaviour
 
             foreach (KeyValuePair<string, string> variable in jsonData)
             {
-                if (variable.Key.ToLower() == endpointsChecks.VariableToLower(ButtonVariables.Pressed))
+                if (variable.Key.ToLower() == VariableToLower(ButtonVariables.Pressed))
                 {
                     pressed = variable.Value;
                     if (!CheckPress(pressed))

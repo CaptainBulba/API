@@ -3,7 +3,7 @@ public static class EndpointsPermissions
     // TODO: set up permissions
     public const bool getPlayer = false;
     public const bool putPlayer = true;
-    public const bool postPlayer = false;
+    public const bool postPlayer = true;
 
     public const bool getButton = true;
     public const bool postButton = true;

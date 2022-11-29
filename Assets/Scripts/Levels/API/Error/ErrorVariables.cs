@@ -4,5 +4,7 @@ public enum ErrorVariables
     Coordinates,
     Token,
     Player,
-    Body
+    Body,
+    Box,
+    Parameters
 }

@@ -14,6 +14,8 @@ public class ApiController : MonoBehaviour
 
     private PlayerEndpoints playerEndpoints;
     private ButtonEndpoints buttonEndpoints;
+    private BoxEndpoints boxEndpoints;
+
     private QuestManager questManager;
     private User user;
 
@@ -48,6 +50,7 @@ public class ApiController : MonoBehaviour
         playerEndpoints = GetComponent<PlayerEndpoints>();
         questManager = GetComponent<QuestManager>();
         buttonEndpoints = GetComponent<ButtonEndpoints>();
+        boxEndpoints = GetComponent<BoxEndpoints>();
         user = GetComponent<User>();
         user.currentState = User.States.Playing;
     }
@@ -66,6 +69,11 @@ public class ApiController : MonoBehaviour
             playerObject.GetComponent<Player>().DecoySwitch(playerDecoy);
             Destroy(playerDecoy);
         }
+    }
+
+    public BoxEndpoints GetBoxEndpoints()
+    {
+        return boxEndpoints;
     }
 
     public User GetUser()

@@ -1,8 +1,8 @@
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class Pipeman : MonoBehaviour
 {
@@ -15,6 +15,9 @@ public class Pipeman : MonoBehaviour
     [SerializeField] private GameObject authTab;
     [SerializeField] private GameObject bodyTab;
 
+    [SerializeField] private TMP_InputField[] paramKeys;
+    [SerializeField] private TMP_InputField[] paramValues;
+
     [SerializeField] private TMP_InputField tokenInput;
 
     [SerializeField] private GameObject topMenu;
@@ -25,6 +28,7 @@ public class Pipeman : MonoBehaviour
 
     private PlayerEndpoints playerEndpoints;
     private ButtonEndpoints buttonEndpoints;
+    private BoxEndpoints boxEndpoints;
 
     private void Start()
     {
@@ -32,6 +36,7 @@ public class Pipeman : MonoBehaviour
         tabs = new GameObject[] { paramTab, authTab, bodyTab };
         playerEndpoints = apiController.GetPlayerEndpoints();
         buttonEndpoints = apiController.GetButtonEndpoints();
+        boxEndpoints = apiController.GetBoxEndpoints();
     }
 
     public void ChangeResponse(string text)
@@ -47,12 +52,13 @@ public class Pipeman : MonoBehaviour
 
         string fullEndpoint = type[0] + type.Substring(1).ToLower() + endpoint;
 
+        Debug.Log(fullEndpoint);
+
         switch (fullEndpoint)
         {
             case EndpointConstants.getPlayer:
                 playerEndpoints.GetPlayer();
                 break;
-
             case EndpointConstants.putPlayer:
                 playerEndpoints.PutPlayer(body);
                 break;
@@ -65,11 +71,33 @@ public class Pipeman : MonoBehaviour
             case EndpointConstants.postButton:
                 buttonEndpoints.PostButton(body);
                 break;
-
+            case EndpointConstants.getAllBoxes:
+                boxEndpoints.GetAllBoxes();
+                break;
+            case EndpointConstants.getBox:
+                boxEndpoints.GetBox();
+                break;
+            case EndpointConstants.putBox:
+                boxEndpoints.PutBox(body);
+                break;
+            case EndpointConstants.postBox:
+                boxEndpoints.PostBox(body);
+                break;
             default:
                 ChangeResponse("Endpoint does not exist");
                 break;
         } 
+    }
+
+    public Dictionary<string, string> GetParameters()
+    {
+        Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+        for (int i = 0; i < paramKeys.Length; i++)
+        {
+            parameters.Add(paramKeys[i].text, paramValues[i].text);
+        }
+        return parameters;
     }
 
     private void HideAllOptions()

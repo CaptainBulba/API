@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Box : MonoBehaviour
@@ -28,5 +29,28 @@ public class Box : MonoBehaviour
         transform.position = new Vector2(x + extraCord, y + extraCord);
 
         activateBox = true;
+    }
+
+    public void CoroutineMoveBox(int x, int y)
+    {
+        StartCoroutine(MoveBox(x, y));
+    }
+
+    private IEnumerator MoveBox(int x, int y)
+    {
+        //TODO: Box Animation
+
+        transform.position = new Vector2(x + extraCord, y + extraCord);
+        yield return new WaitForSeconds(1f);
+    }
+
+    public void ActiveFlag(bool option)
+    {
+        enabled = option;
+    }
+
+    public void DeleteObject()
+    {
+        Destroy(gameObject);
     }
 }

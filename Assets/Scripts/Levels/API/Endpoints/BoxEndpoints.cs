@@ -4,14 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BoxEndpoints : MonoBehaviour
+public class BoxEndpoints : Endpoints
 {
-    //TODO: Create inheritance of main Endpoint class to avoid recreating
-
-    private ApiController apiController;
-    private Pipeman pipeman;
-    private EndpointsChecks endpointsChecks;
-
     private List<BoxConstructor> boxes = new List<BoxConstructor>();
     private List<string> acceptedVariables = Enum.GetNames(typeof(BoxVariables)).ToList();
 
@@ -24,19 +18,22 @@ public class BoxEndpoints : MonoBehaviour
         ActiveFlag
     }
 
-
-    private void Start()
+    public enum BoxParameters
     {
-        apiController = GetComponent<ApiController>();
-        pipeman = apiController.GetPipeman();
-        endpointsChecks = GetComponent<EndpointsChecks>();
+        Id
+    }
 
+    protected override void Start()
+    {
+        base.Start();
         FindAllBoxes();
 
+        //Testing
         string json = "{\"x\": \"4\", \"y\": \"0\"}";
         PutBox(json);
         json = "{\"x\": \"5\", \"y\": \"1\", \"activeFlag\": false}";
-        PostPlayer(0, json);
+        PostBox(json);
+
     }
 
     private void FindAllBoxes()
@@ -46,28 +43,49 @@ public class BoxEndpoints : MonoBehaviour
             string x = (box.transform.position.x - 0.5f).ToString();
             string y = (box.transform.position.y - 0.5f).ToString();
 
-            BoxConstructor boxConstructor = new BoxConstructor(x, y);
+            BoxConstructor boxConstructor = new BoxConstructor(box, x, y);
             boxes.Add(boxConstructor);
-
-            GetBox(0);
         }
     }
 
     public void GetAllBoxes()
     {
-        if (IsBoxExists() && endpointsChecks.IsValidToken() && endpointsChecks.CheckPermission(EndpointsPermissions.getAllBoxes))
+        if (AnyBoxExists() && IsValidToken() && CheckPermission(EndpointsPermissions.getAllBoxes))
             pipeman.ChangeResponse(JsonConvert.SerializeObject(boxes, Formatting.Indented));
     }
 
-    public void GetBox(int boxId)
+    public void GetBox()
     {
-        if (IsBoxExists() && endpointsChecks.IsValidToken() && endpointsChecks.CheckPermission(EndpointsPermissions.getBox))
-            pipeman.ChangeResponse(ObjectToJson(boxes[boxId]));
+        if (AnyBoxExists() && IsValidToken() && CheckPermission(EndpointsPermissions.getBox))
+        {
+            List<string> acceptedParameters = new List<string> { BoxParameters.Id.ToString() };
+
+            Dictionary<string, string> parameters = pipeman.GetParameters();
+
+            if (ParametersValidation(parameters, acceptedParameters))
+            {
+                int boxId = 0;
+                bool displayObject = false;
+                foreach (KeyValuePair<string, string> variable in parameters)
+                {
+                    if (variable.Key.ToLower() == EnumToLower(BoxParameters.Id) && isInteger(EnumToLower(BoxParameters.Id), variable.Value))
+                    {
+                        if (IsBoxExists(int.Parse(variable.Value)))
+                        {
+                            boxId = int.Parse(variable.Value);
+                            displayObject = true;
+                        }
+                    }
+                }
+                if (displayObject)
+                    pipeman.ChangeResponse(ObjectToJson(boxes[boxId]));
+            }
+        }
     }
 
     public void PutBox(string json)
     {
-        if (endpointsChecks.IsValidJson(json) && endpointsChecks.IsValidToken() && endpointsChecks.CheckPermission(EndpointsPermissions.putBox))
+        if (IsValidJson(json) && IsValidToken() && CheckPermission(EndpointsPermissions.putBox))
         {
             BoxConstructor jsonData = JsonConvert.DeserializeObject<BoxConstructor>(json);
 
@@ -76,12 +94,11 @@ public class BoxEndpoints : MonoBehaviour
 
             if (CheckCord(x) && CheckCord(y))
             {
-                BoxConstructor boxConstructor = new BoxConstructor(x, y);
-                boxes.Add(boxConstructor);
-
                 GameObject boxObject = Instantiate(boxPrefab, new Vector2((float)int.Parse(x), (float)int.Parse(y)), transform.rotation);
-                boxObject.AddComponent<Box>();
                 boxObject.SetActive(false);
+
+                BoxConstructor boxConstructor = new BoxConstructor(boxObject, x, y);
+                boxes.Add(boxConstructor);
 
                 CreateBox create = new CreateBox(boxObject, int.Parse(x), int.Parse(y));
                 apiController.actions.Add(create);
@@ -89,64 +106,99 @@ public class BoxEndpoints : MonoBehaviour
         }
     }
 
-    public void PostPlayer(int boxId, string json)
+    public void PostBox(string json)
     {
-        if (endpointsChecks.IsValidJson(json) && IsBoxExists() && endpointsChecks.VariablesValidation(json, acceptedVariables)
-            && endpointsChecks.IsValidToken() && endpointsChecks.CheckPermission(EndpointsPermissions.postBox))
+        if (IsValidJson(json) && AnyBoxExists() && VariablesValidation(json, acceptedVariables)
+            && IsValidToken() && CheckPermission(EndpointsPermissions.postBox))
         {
-            bool editObject = true;
+            List<string> acceptedParameters = new List<string> { BoxParameters.Id.ToString() };
+
+            Dictionary<string, string> parameters = pipeman.GetParameters();
+
+            bool editObject = false;
             string activeFlag = null;
             string x = null;
             string y = null;
+            int boxId = 0;
 
             Dictionary<string, string> jsonData = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
 
             foreach (KeyValuePair<string, string> variable in jsonData)
             {
-                if (variable.Key.ToLower() == GetBoxVariable(BoxVariables.ActiveFlag))
+                if (variable.Key.ToLower() == EnumToLower(BoxVariables.ActiveFlag))
                 {
-                    if (!CheckActiveFlag(variable.Value))
-                        editObject = false;
-
-                    activeFlag = variable.Value;
+                    if (CheckActiveFlag(variable.Value))
+                    {
+                        editObject = true;
+                        activeFlag = variable.Value;
+                    }
                 }
-                if (variable.Key.ToLower() == GetBoxVariable(BoxVariables.X))
-                { 
-                    if (!CheckCord(variable.Value))
-                        editObject = false;
-
-                    x = variable.Value;
-                }
-                if (variable.Key.ToLower() == GetBoxVariable(BoxVariables.Y))
+                if (variable.Key.ToLower() == EnumToLower(BoxVariables.X))
                 {
-                    if (!CheckCord(variable.Value))
-                        editObject = false;     
-
-                    y = variable.Value;
+                    if (CheckCord(variable.Value))
+                    {
+                        editObject = true;
+                        x = variable.Value;
+                    }
+                }
+                if (variable.Key.ToLower() == EnumToLower(BoxVariables.Y))
+                {
+                    if (CheckCord(variable.Value))
+                    {
+                        editObject = true;
+                        y = variable.Value;
+                    }
                 }
             }
 
-            if (editObject)
+            if (ParametersValidation(parameters, acceptedParameters))
             {
-                JsonConvert.PopulateObject(json, boxes[boxId]);
-                pipeman.ChangeResponse(ObjectToJson(boxes[boxId]));
-
-                if (x != null || y != null)
+                foreach (KeyValuePair<string, string> variable in parameters)
                 {
-                    if (x == null)
-                        x = boxes[boxId].x;
-
-                    if (y == null)
-                        y = boxes[boxId].y;
-
-                    //TODO: add move box functionality
-
-                    //MovePlayer move = new MovePlayer(apiController.GetPlayer(), (float)int.Parse(x), (float)int.Parse(y));
-                   // apiController.actions.Add(move);
+                    if (variable.Key.ToLower() == EnumToLower(BoxParameters.Id) && isInteger(EnumToLower(BoxParameters.Id), variable.Value))
+                    {
+                        if (IsBoxExists(int.Parse(variable.Value)))
+                        {
+                            boxId = int.Parse(variable.Value);
+                            editObject = true;
+                        }
+                    }
                 }
+                if (editObject)
+                {
+                    JsonConvert.PopulateObject(json, boxes[boxId]);
+                    pipeman.ChangeResponse(ObjectToJson(boxes[boxId]));
 
-                Debug.Log(boxes[boxId].x + boxes[boxId].y + boxes[boxId].activeFlag);
+                    if (x != null || y != null)
+                    {
+                        if (x == null)
+                            x = boxes[boxId].x;
+
+                        if (y == null)
+                            y = boxes[boxId].y;
+
+                        MoveBox move = new MoveBox(boxes[boxId].GetBoxObject(), int.Parse(x), int.Parse(y));
+                        apiController.actions.Add(move);
+                    }
+
+                    if (activeFlag != null)
+                    {
+                        ActiveFlagBox flag = new ActiveFlagBox(boxes[boxId].GetBoxObject(), bool.Parse(activeFlag));
+                        apiController.actions.Add(flag);
+                    }
+                }
             }
+        }
+    }
+
+    public void DeleteBox(int boxId)
+    {
+        if (AnyBoxExists() && IsValidToken() && CheckPermission(EndpointsPermissions.deleteBox))
+        {
+            pipeman.ChangeResponse(ObjectToJson(boxes[boxId]));
+
+            DeleteBox flag = new DeleteBox(boxes[boxId].GetBoxObject());
+            apiController.actions.Add(flag);
         }
     }
 
@@ -172,12 +224,11 @@ public class BoxEndpoints : MonoBehaviour
     private bool CheckCord(string coordinate)
     {
         Errors error = Errors.None;
-        int integerCord;
 
         if (string.IsNullOrWhiteSpace(coordinate))
             error = Errors.Null;
 
-        else if (!int.TryParse(coordinate, out integerCord))
+        else if (!int.TryParse(coordinate, out _))
             error = Errors.NotInteger;
 
         if (error != Errors.None)
@@ -194,20 +245,26 @@ public class BoxEndpoints : MonoBehaviour
         return JsonConvert.SerializeObject(json, Formatting.Indented);
     }
 
-    private bool IsBoxExists()
+    private bool AnyBoxExists()
     {
         if (boxes.Count != 0)
         {
             //TODO list is empty error
-            pipeman.DisplayError(ErrorVariables.Player.ToString(), Errors.ObjectExists);
+            pipeman.DisplayError(ErrorVariables.Box.ToString(), Errors.ObjectNotExists);
             return true;
         }
         else
             return false;
     }
 
-    private string GetBoxVariable(Enum variable)
+    private bool IsBoxExists(int boxId)
     {
-        return variable.ToString().ToLower();
+        if (boxes.ElementAtOrDefault(boxId) != null)
+            return true;
+        else
+        {
+            pipeman.DisplayError(ErrorVariables.Box.ToString(), Errors.ObjectNotExists);
+            return false;
+        }
     }
 }

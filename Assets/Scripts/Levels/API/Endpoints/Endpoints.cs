@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EndpointsChecks : MonoBehaviour
+public class Endpoints : MonoBehaviour
 {
-    private ApiController apiController;
-    private Pipeman pipeman;
+    [HideInInspector] public ApiController apiController;
+    [HideInInspector] public Pipeman pipeman;
 
-    private void Start()
+    protected virtual void Start()
     {
         apiController = ApiController.Instance;
         pipeman = apiController.GetPipeman();
@@ -60,21 +60,58 @@ public class EndpointsChecks : MonoBehaviour
         {
             if (!acceptedVariables.Contains(variable.Key, StringComparer.OrdinalIgnoreCase))
             {
-                pipeman.DisplayError(variable.Key, Errors.WrongVariable);
+                pipeman.DisplayError(variable.Key, Errors.ObjectNotExists);
                 return false;
             }
         }
         return true;
     }
 
+    public bool ParametersValidation(Dictionary<string, string> parameters, List<string> acceptedParemeters)
+    {
+        if(parameters.Count == 0)
+        {
+            pipeman.DisplayError(ErrorVariables.Parameters.ToString(), Errors.Null);
+            return false;
+        }
+        else
+        {
+            foreach (KeyValuePair<string, string> param in parameters)
+            {
+                if (!acceptedParemeters.Contains(param.Key, StringComparer.OrdinalIgnoreCase))
+                {
+                    pipeman.DisplayError(param.Key, Errors.ObjectNotExists);
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
     public bool CheckPermission(bool endpoint)
     {
         if (endpoint == false)
         {
-            pipeman.DisplayError("permission", Errors.WrongVariable);
+            pipeman.DisplayError("", Errors.NoPermission);
             return false;
         }
         else
             return true;
+    }
+
+    public string EnumToLower(Enum variable)
+    {
+        return variable.ToString().ToLower();
+    }
+
+    public bool isInteger(string variable, string value)
+    {
+        if (int.TryParse(value, out _))
+            return true;
+        else
+        {
+            pipeman.DisplayError(variable, Errors.ObjectNotExists);
+            return false;
+        }
     }
 }

@@ -4,25 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PlayerEndpoints : MonoBehaviour
+public class PlayerEndpoints : Endpoints
 {
-    private EndpointsChecks endpointsChecks;
-
     private PlayerConstructor player;
     
     [SerializeField] private GameObject playerPrefab;
 
-    private ApiController apiController;
-    private Pipeman pipeman;
-
     private List<string> acceptedVariables = Enum.GetNames(typeof(PlayerVariables)).ToList();
 
-    private void Start()
+    protected override void Start()
     {
-        apiController = GetComponent<ApiController>();
-        pipeman = apiController.GetPipeman();
-        endpointsChecks = GetComponent<EndpointsChecks>();
-
+        base.Start();
         //For testing
         pipeman.SetTokeInput(apiController.GetToken());
         string json = "{\"name\": \"Bob\", \"x\": \"-5\", \"y\": \"0\"}";
@@ -31,7 +23,8 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void GetPlayer()
     {
-        if (IsPlayerExists() && endpointsChecks.IsValidToken() && endpointsChecks.CheckPermission(EndpointsPermissions.getPlayer))
+        Debug.Log("hey");
+        if (IsPlayerExists() && IsValidToken() && CheckPermission(EndpointsPermissions.getPlayer))
         {
             pipeman.ChangeResponse(ObjectToJson(player));
         }
@@ -39,7 +32,7 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void PutPlayer(string json)
     {
-        if (endpointsChecks.IsValidJson(json) && !IsPlayerExists() && endpointsChecks.IsValidToken() && endpointsChecks.CheckPermission(EndpointsPermissions.putPlayer))
+        if (IsValidJson(json) && !IsPlayerExists() && IsValidToken() && CheckPermission(EndpointsPermissions.putPlayer))
         {
             PlayerConstructor jsonData = JsonConvert.DeserializeObject<PlayerConstructor>(json);
 
@@ -64,8 +57,8 @@ public class PlayerEndpoints : MonoBehaviour
 
     public void PostPlayer(string json)
     {
-        if (endpointsChecks.IsValidJson(json) && IsPlayerExists() && endpointsChecks.VariablesValidation(json, acceptedVariables) 
-            && endpointsChecks.IsValidToken() && endpointsChecks.CheckPermission(EndpointsPermissions.postPlayer))
+        if (IsValidJson(json) && IsPlayerExists() && VariablesValidation(json, acceptedVariables) 
+            && IsValidToken() && CheckPermission(EndpointsPermissions.postPlayer))
         {
             bool editObject = true;
             string name = null;
