@@ -43,6 +43,8 @@ public class ApiController : MonoBehaviour
     {
         SetPlayer();
         SetButton();
+        SetTopMenu();
+        SetPipeman();
     }
 
     private void Start()
@@ -55,6 +57,16 @@ public class ApiController : MonoBehaviour
         user.currentState = User.States.Playing;
     }
 
+    private void SetPipeman()
+    {
+        pipeman = FindObjectOfType<Pipeman>();
+    }
+
+    private void SetTopMenu()
+    { 
+        topMenu = FindObjectOfType<TopMenu>().gameObject;
+    }
+
     private void SetButton()
     {
         button = GameObject.FindWithTag(ObjectsTags.Button.ToString());
@@ -64,7 +76,7 @@ public class ApiController : MonoBehaviour
     {
         GameObject playerDecoy = GameObject.FindWithTag(ObjectsTags.PlayerDecoy.ToString());
 
-        if (playerDecoy != null)
+        if (playerDecoy != null && playerObject != null)
         {
             playerObject.GetComponent<Player>().DecoySwitch(playerDecoy);
             Destroy(playerDecoy);

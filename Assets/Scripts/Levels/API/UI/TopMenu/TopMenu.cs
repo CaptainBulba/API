@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class TopMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject questObject;
+    private GameObject questObject;
     private GameObject pipemanObject;
 
     private void Start()
     {
         pipemanObject = ApiController.Instance.GetPipeman().gameObject;
+        questObject = FindObjectOfType<QuestObjects>().questObject;
     }
 
     public void OpenPipeman()

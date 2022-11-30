@@ -25,6 +25,13 @@ public class Helpo : MonoBehaviour
     private float typingTimer = 0.05f;
     private bool isShowingMessage = false;
 
+    private enum HelpoAnimations
+    {
+        HelpoTalking,
+        HelpoMessage,
+        HelpoOff
+    }
+
     private void Start()
     {
         camZoom = Camera.main.GetComponent<CameraZoom>();

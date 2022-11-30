@@ -8,9 +8,7 @@ using UnityEngine;
 public class QuestManager : MonoBehaviour
 {
     private GameObject questChecks;
-    [SerializeField] private GameObject questObject;
-    [SerializeField] private TextMeshProUGUI questTitle;
-    [SerializeField] private TextMeshProUGUI questDescription;
+    private QuestObjects questObjects;
 
     private int currentQuest = 0;
     private string currentQuestClean;
@@ -18,6 +16,7 @@ public class QuestManager : MonoBehaviour
 
     private void Start()
     {
+        questObjects = FindObjectOfType<QuestObjects>();
         questChecks = GameObject.FindWithTag(ObjectsTags.QuestChecks.ToString());
         LoadQuest();
     }
@@ -49,8 +48,8 @@ public class QuestManager : MonoBehaviour
         currentQuestClean = jsonData.titleClean;
         helpoLines = jsonData.helpo;
 
-        questTitle.text = jsonData.title;
-        questDescription.text = jsonData.description;
+        questObjects.questTitle.text = jsonData.title;
+        questObjects.questDescription.text = jsonData.description;
     }
 
     public void InitiateQuestChecks()
@@ -76,7 +75,7 @@ public class QuestManager : MonoBehaviour
 
     public void CloseQuest()
     {
-        questObject.SetActive(false);
+        questObjects.questObject.SetActive(false);
         GetComponent<ApiController>().GetTopMenuObject().SetActive(true);
         InitiateQuestChecks();
     }

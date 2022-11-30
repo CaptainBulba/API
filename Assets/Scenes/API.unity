@@ -6718,7 +6718,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1049578430}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Pipeman, Assembly-CSharp
         m_MethodName: ChangeTab
         m_Mode: 3
@@ -6898,7 +6898,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1049578429}
-  - component: {fileID: 1049578430}
   m_Layer: 5
   m_Name: Pipeman
   m_TagString: Untagged
@@ -6932,29 +6931,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.000034332, y: 0}
   m_SizeDelta: {x: 640, y: 360}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1049578430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1049578428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6db255600b6c2714a84e065c3f639742, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  responseText: {fileID: 609955098}
-  bodyText: {fileID: 1878228176}
-  endpointText: {fileID: 627280579}
-  endpointType: {fileID: 1831459490}
-  paramTab: {fileID: 1292384602}
-  authTab: {fileID: 149234660}
-  bodyTab: {fileID: 1726992329}
-  paramKeys: []
-  paramValues: []
-  tokenInput: {fileID: 1458495865}
-  topMenu: {fileID: 1978140980}
 --- !u!1 &1077250862
 GameObject:
   m_ObjectHideFlags: 0
@@ -7872,7 +7848,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1049578430}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Pipeman, Assembly-CSharp
         m_MethodName: ChangeTab
         m_Mode: 3
@@ -8290,7 +8266,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1049578430}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Pipeman, Assembly-CSharp
         m_MethodName: ChangeTab
         m_Mode: 3
@@ -9875,17 +9851,13 @@ CompositeCollider2D:
         Y: 30000000
       - X: 90000000
         Y: -50000000
-      - X: 60000100
+      - X: 60000000
         Y: -50000000
-      - X: 60000100
-        Y: 41
-      - X: 60000041
-        Y: 100
-      - X: -40000041
-        Y: 100
-      - X: -40000100
-        Y: 41
-      - X: -40000100
+      - X: 60000000
+        Y: 0
+      - X: -40000000
+        Y: 0
+      - X: -40000000
         Y: -50000000
   m_CompositePaths:
     m_Paths:
@@ -9894,10 +9866,10 @@ CompositeCollider2D:
       - {x: -10, y: 4.999971}
       - {x: -9.99997, y: -7}
     - - {x: 9, y: -4.9999704}
-      - {x: 6.00001, y: -4.9999704}
-      - {x: 5.9999747, y: 0.00001}
-      - {x: -4.00001, y: -0.0000252}
-      - {x: -4.000039, y: -5}
+      - {x: 6, y: -4.9999704}
+      - {x: 5.999971, y: 0}
+      - {x: -4, y: -0.000029300001}
+      - {x: -4.0000296, y: -5}
       - {x: -8, y: -4.9999704}
       - {x: -7.9999704, y: 3}
       - {x: 9, y: 2.9999707}
@@ -14136,7 +14108,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1049578430}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Pipeman, Assembly-CSharp
         m_MethodName: ClosePipeman
         m_Mode: 1
@@ -14507,6 +14479,8 @@ GameObject:
   - component: {fileID: 1930561808}
   - component: {fileID: 1930561807}
   - component: {fileID: 1930561806}
+  - component: {fileID: 1930561805}
+  - component: {fileID: 1930561810}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -14514,6 +14488,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1930561805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930561804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0c620502d135854099e4811eef91894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questObject: {fileID: 823319722}
+  questTitle: {fileID: 1128066062}
+  questDescription: {fileID: 1885740391}
 --- !u!114 &1930561806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14597,6 +14586,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1930561810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930561804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6db255600b6c2714a84e065c3f639742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  responseText: {fileID: 609955098}
+  bodyText: {fileID: 1878228176}
+  endpointText: {fileID: 627280579}
+  endpointType: {fileID: 1831459490}
+  paramTab: {fileID: 1292384602}
+  authTab: {fileID: 149234660}
+  bodyTab: {fileID: 1726992329}
+  paramKeys: []
+  paramValues: []
+  tokenInput: {fileID: 1458495865}
+  topMenu: {fileID: 1978140980}
 --- !u!1 &1938051381
 GameObject:
   m_ObjectHideFlags: 0
@@ -14680,7 +14692,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1049578430}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Pipeman, Assembly-CSharp
         m_MethodName: SendButton
         m_Mode: 1
@@ -15108,7 +15120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   topMenu: {fileID: 1978140980}
-  pipeman: {fileID: 1049578430}
+  pipeman: {fileID: 0}
 --- !u!4 &2029313229
 Transform:
   m_ObjectHideFlags: 0
@@ -15150,9 +15162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47fe249c66cacda459c1fca10defe106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questObject: {fileID: 823319722}
-  questTitle: {fileID: 1128066062}
-  questDescription: {fileID: 1885740391}
 --- !u!114 &2029313232
 MonoBehaviour:
   m_ObjectHideFlags: 0
