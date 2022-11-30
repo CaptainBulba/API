@@ -14,6 +14,11 @@ public class ButtonEndpoints : Endpoints
 
     private float maxDistance = 0.1f;
 
+    public enum ButtonVariables
+    {
+        Pressed
+    }
+
     protected override void Start()
     {
         base.Start();

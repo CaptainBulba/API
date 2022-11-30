@@ -6,17 +6,25 @@ public class PlayerAnimation : MonoBehaviour
 {
     private Animator anim;
 
+    public enum AnimNames
+    {
+        PlayerIdle,
+        PlayerWalking,
+        PlayerJump
+    }
+
+
     private void Start()
     {
         anim = GetComponent<Animator>();
     }
 
-    public void ChangeAnimation(PlayerAnimations animation)
+    public void ChangeAnimation(AnimNames animation)
     {
         anim.Play(animation.ToString());
     }
 
-    public void PlayAnimationOnce(PlayerAnimations animation)
+    public void PlayAnimationOnce(AnimNames animation)
     {
         anim.Play(animation.ToString(), 0, 0.0f);
     }

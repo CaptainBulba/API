@@ -6,11 +6,17 @@ using UnityEngine;
 
 public class PlayerEndpoints : Endpoints
 {
-    private PlayerConstructor player;
-    
     [SerializeField] private GameObject playerPrefab;
+    private PlayerConstructor player;
 
     private List<string> acceptedVariables = Enum.GetNames(typeof(PlayerVariables)).ToList();
+
+    private enum PlayerVariables
+    {
+        Name,
+        X,
+        Y
+    }
 
     protected override void Start()
     {

@@ -10,15 +10,15 @@ public class BoxEndpoints : Endpoints
     private List<string> acceptedVariables = Enum.GetNames(typeof(BoxVariables)).ToList();
 
     [SerializeField] private GameObject boxPrefab;
-
-    public enum BoxVariables
+ 
+    private enum BoxVariables
     {
         X,
         Y,
         ActiveFlag
     }
 
-    public enum BoxParameters
+    private enum BoxParameters
     {
         Id
     }

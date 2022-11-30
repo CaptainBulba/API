@@ -59,23 +59,23 @@ public class Player : MonoBehaviour
 
                 if (dir.x > 0f)
                 {
-                    anim.ChangeAnimation(PlayerAnimations.PlayerWalking);
+                    anim.ChangeAnimation(PlayerAnimation.AnimNames.PlayerWalking);
                     sprite.flipX = true;
                 }
                 else if (dir.x < 0f)
                 {
-                    anim.ChangeAnimation(PlayerAnimations.PlayerWalking);
+                    anim.ChangeAnimation(PlayerAnimation.AnimNames.PlayerWalking);
                     sprite.flipX = false;
                 }
                 else if (dir.y > 0f || dir.y < 0f)
-                    anim.ChangeAnimation(PlayerAnimations.PlayerWalking);
+                    anim.ChangeAnimation(PlayerAnimation.AnimNames.PlayerWalking);
 
                 transform.position = Vector2.MoveTowards(transform.position, targetPos, Time.deltaTime * speed);
                 currentState = PlayerStates.Walking;
             }
             else
             {
-                anim.ChangeAnimation(PlayerAnimations.PlayerIdle);
+                anim.ChangeAnimation(PlayerAnimation.AnimNames.PlayerIdle);
                 currentState = PlayerStates.Idle;
             }
         }
@@ -161,7 +161,7 @@ public class Player : MonoBehaviour
 
     public void Jump()
     {
-        anim.PlayAnimationOnce(PlayerAnimations.PlayerJump);
+        anim.PlayAnimationOnce(PlayerAnimation.AnimNames.PlayerJump);
         currentState = PlayerStates.Jumping;
     }
 
